@@ -1,11 +1,62 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img" aria-label="Pod 17">
-  <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="hsl(79, 45%, 30%)"/>
-      <stop offset="1" stop-color="hsl(119, 50%, 20%)"/>
-    </linearGradient>
-  </defs>
-  <rect width="1200" height="630" fill="url(#g)"/>
-  <text x="600" y="300" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="76" font-weight="700" fill="#ffffff">Pod 17</text>
-  <text x="600" y="368" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="26" fill="#ffffffaa">upload images/cover.jpg to replace this</text>
+<svg width="800" height="450" viewBox="0 0 800 450" xmlns="http://www.w3.org/2000/svg" role="img">
+<title>Voice of Animal cover image</title>
+<desc>A bird perched above a sound spectrogram, illustrating audio being turned into a bird species prediction.</desc>
+
+<rect width="800" height="450" fill="#0F6E56"/>
+
+<!-- soft background circle behind bird -->
+<circle cx="230" cy="190" r="150" fill="#1D9E75" opacity="0.35"/>
+
+<!-- branch -->
+<path d="M60 300 C 220 260, 340 260, 430 300" stroke="#3C3489" stroke-width="10" fill="none" stroke-linecap="round" opacity="0.55"/>
+
+<!-- bird body -->
+<ellipse cx="230" cy="220" rx="70" ry="55" fill="#F2A623"/>
+<!-- bird head -->
+<circle cx="150" cy="175" r="42" fill="#F2A623"/>
+<!-- belly highlight -->
+<ellipse cx="245" cy="245" rx="45" ry="30" fill="#FCDE5A"/>
+<!-- wing -->
+<path d="M210 190 C 260 180, 300 220, 270 270 C 235 260, 205 235, 210 190 Z" fill="#D85A30"/>
+<!-- tail -->
+<path d="M295 220 L 370 195 L 370 245 Z" fill="#D85A30"/>
+<!-- beak -->
+<path d="M112 172 L 80 178 L 112 190 Z" fill="#993C1D"/>
+<!-- eye -->
+<circle cx="140" cy="165" r="6" fill="#2C2C2A"/>
+<circle cx="142" cy="163" r="2" fill="#FFFFFF"/>
+
+<!-- legs -->
+<path d="M215 270 L 210 300" stroke="#993C1D" stroke-width="4" stroke-linecap="round"/>
+<path d="M255 272 L 262 302" stroke="#993C1D" stroke-width="4" stroke-linecap="round"/>
+
+<!-- sound wave lines from beak, showing the bird singing -->
+<path d="M65 165 Q 40 165 40 145" stroke="#FCDE5A" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.85"/>
+<path d="M60 180 Q 25 180 22 150" stroke="#FCDE5A" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.6"/>
+<path d="M58 195 Q 15 200 15 165" stroke="#FCDE5A" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.4"/>
+
+<!-- spectrogram panel on the right -->
+<rect x="470" y="90" width="270" height="270" rx="16" fill="#042C53" opacity="0.9"/>
+
+<!-- spectrogram bars, varying heights to suggest a bird call waveform -->
+<g fill="#5DCAA5">
+<rect x="495" y="270" width="10" height="40" rx="2"/>
+<rect x="513" y="230" width="10" height="80" rx="2"/>
+<rect x="531" y="180" width="10" height="130" rx="2"/>
+<rect x="549" y="140" width="10" height="170" rx="2"/>
+<rect x="567" y="200" width="10" height="110" rx="2"/>
+<rect x="585" y="250" width="10" height="60" rx="2"/>
+<rect x="603" y="160" width="10" height="150" rx="2"/>
+<rect x="621" y="120" width="10" height="190" rx="2"/>
+<rect x="639" y="190" width="10" height="120" rx="2"/>
+<rect x="657" y="240" width="10" height="70" rx="2"/>
+<rect x="675" y="210" width="10" height="100" rx="2"/>
+<rect x="693" y="260" width="10" height="50" rx="2"/>
+<rect x="711" y="230" width="10" height="80" rx="2"/>
+</g>
+
+<!-- small label chip suggesting the predicted species output -->
+<rect x="495" y="320" width="215" height="30" rx="15" fill="#F2A623"/>
+<text x="602" y="340" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="700" fill="#4A1B0C">Species detected</text>
+
 </svg>
