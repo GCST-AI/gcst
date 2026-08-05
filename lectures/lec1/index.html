@@ -3,13 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Software Development — Lecture 01 — study at home</title>
-<meta name="description" content="The full Lecture 01 on software process models, agentic AI and GitHub, written to be read on your own at home.">
+<title>The Software Development Life Cycle — Lecture 01 v2 — study at home</title>
+<meta name="description" content="The seven phases of the software development life cycle, written so you can apply each one to your pod project this week.">
 
 <style>
 :root{
   --paper:#E7E8E4; --surface:#F1F2EE; --ink:#151917; --ink2:#565C59; --ink3:#7C837F;
   --hair:#C6C9C4; --accent:#B96C08; --accent-soft:#B96C081f; --teal:#20716A;
+  --shot:1; --shot-bg:#FAFAF8;
   --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono", "Roboto Mono", Consolas, monospace;
   --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   color-scheme: light dark;
@@ -18,15 +19,18 @@
   :root{
     --paper:#101312; --surface:#171B1A; --ink:#E8EAE7; --ink2:#9AA19D; --ink3:#6E756F;
     --hair:#2A302E; --accent:#F0A93C; --accent-soft:#F0A93C1c; --teal:#5FBDB0;
+    --shot:.82; --shot-bg:#D9DAD6;
   }
 }
 :root[data-theme="dark"]{
   --paper:#101312; --surface:#171B1A; --ink:#E8EAE7; --ink2:#9AA19D; --ink3:#6E756F;
   --hair:#2A302E; --accent:#F0A93C; --accent-soft:#F0A93C1c; --teal:#5FBDB0;
+  --shot:.82; --shot-bg:#D9DAD6;
 }
 :root[data-theme="light"]{
   --paper:#E7E8E4; --surface:#F1F2EE; --ink:#151917; --ink2:#565C59; --ink3:#7C837F;
   --hair:#C6C9C4; --accent:#B96C08; --accent-soft:#B96C081f; --teal:#20716A;
+  --shot:1; --shot-bg:#FAFAF8;
 }
 
 *{box-sizing:border-box}
@@ -57,6 +61,8 @@ body::before{
 }
 .topbar a.home{color:var(--ink3); text-decoration:none; border-bottom:1px solid transparent}
 .topbar a.home:hover{color:var(--accent); border-color:var(--accent)}
+.topbar .mid{display:none}
+@media (min-width:720px){.topbar .mid{display:block}}
 .topbar .tools{display:flex; gap:.4rem; align-items:center}
 .topbar button{
   font:inherit; letter-spacing:inherit; text-transform:inherit; cursor:pointer;
@@ -68,10 +74,11 @@ body::before{
 main{position:relative; z-index:1; max-width:64rem; margin:0 auto; padding:0 clamp(1rem,4vw,2rem) 6rem}
 
 /* ---------- type ---------- */
-h1,h2,h3{font-family:var(--mono); font-weight:650; letter-spacing:-.02em; line-height:1.1; color:var(--ink); text-wrap:balance; margin:0}
+h1,h2,h3,h4{font-family:var(--mono); font-weight:650; letter-spacing:-.02em; line-height:1.1; color:var(--ink); text-wrap:balance; margin:0}
 h1{font-size:clamp(2rem,1.4rem + 3vw,3.4rem)}
 h2{font-size:clamp(1.45rem,1.15rem + 1.5vw,2.1rem)}
 h3{font-size:clamp(1.08rem,1rem + .45vw,1.3rem); letter-spacing:-.01em}
+h4{font-size:.95rem; letter-spacing:.02em}
 p{margin:0 0 1.05em; max-width:68ch}
 p:last-child{margin-bottom:0}
 strong,b{color:var(--ink); font-weight:600}
@@ -93,7 +100,7 @@ section.blk:first-of-type{border-top:0}
   font-family:var(--mono); font-size:.72rem; letter-spacing:.2em; color:var(--ink3);
   display:block; margin-bottom:.5rem;
 }
-.blk > h2 + p, .blk > .snum + h2 + p{margin-top:1.1rem}
+.blk > h2 + p, .blk > .snum + h2 + p, .blk > .ph + p{margin-top:1.1rem}
 
 /* ---------- figures ---------- */
 figure{margin:2rem 0; display:grid; gap:.7rem}
@@ -111,6 +118,29 @@ figcaption{font-family:var(--mono); font-size:.78rem; line-height:1.5; color:var
 .s-hi-d{stroke:var(--accent); stroke-width:1.4; fill:none; stroke-dasharray:5 4}
 .f-hi{fill:var(--accent)}
 
+/* photographic / stock diagrams */
+.shot img{
+  display:block; width:100%; height:auto; background:var(--shot-bg);
+  border:1px solid var(--hair); padding:clamp(.6rem,2vw,1.2rem);
+  opacity:var(--shot); transition:opacity .18s ease;
+}
+.shot img:hover{opacity:1}
+.shots{display:grid; gap:1rem; grid-template-columns:1fr}
+@media (min-width:760px){.shots{grid-template-columns:1fr 1fr}}
+.shots figure{margin:0; align-content:start}
+
+/* ---------- table ---------- */
+table.tbl{border-collapse:collapse; width:100%; min-width:36rem; font-size:.92rem}
+table.tbl th, table.tbl td{
+  border:1px solid var(--hair); padding:.6rem .75rem; text-align:left; vertical-align:top;
+}
+table.tbl th{
+  font-family:var(--mono); font-size:.7rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--ink3); font-weight:500; background:var(--surface);
+}
+table.tbl td b{color:var(--ink)}
+table.tbl td code{background:none; padding:0; color:var(--accent)}
+
 /* ---------- components ---------- */
 .cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(15rem,1fr)); gap:1rem; margin:1.6rem 0 0}
 .card{border:1px solid var(--hair); background:var(--surface); padding:1.1rem 1.2rem}
@@ -119,6 +149,18 @@ figcaption{font-family:var(--mono); font-size:.78rem; line-height:1.5; color:var
   color:var(--accent); display:block; margin-bottom:.5rem;
 }
 .card p{font-size:.94em; margin:0}
+
+/* a phase block */
+.ph{display:flex; align-items:baseline; gap:.9rem; margin-bottom:.9rem}
+.ph .no{
+  font-family:var(--mono); font-size:clamp(1.6rem,1.2rem + 1.6vw,2.4rem); font-weight:650;
+  color:var(--accent); line-height:1; letter-spacing:-.03em;
+}
+.deliv{
+  border-left:2px solid var(--accent); background:var(--surface); padding:.7rem .95rem; margin:1.3rem 0 0;
+  font-family:var(--mono); font-size:.86rem; color:var(--ink);
+}
+.deliv span{color:var(--ink3); letter-spacing:.14em; text-transform:uppercase; font-size:.68rem; display:block; margin-bottom:.3rem}
 
 .ol{display:grid; gap:.85rem; counter-reset:st; margin:1.4rem 0 0; padding:0; list-style:none}
 .ol li{position:relative; padding-left:2.6rem; max-width:66ch}
@@ -135,6 +177,15 @@ pre.code{
 }
 pre.code b{color:var(--ink); font-weight:600}
 pre.code i{color:var(--ink3); font-style:normal}
+
+blockquote.q{
+  margin:1.6rem 0 0; padding:0 0 0 1.1rem; border-left:2px solid var(--hair);
+  color:var(--ink); font-size:1.02em;
+}
+blockquote.q cite{
+  display:block; margin-top:.6rem; font-style:normal;
+  font-family:var(--mono); font-size:.74rem; letter-spacing:.1em; text-transform:uppercase; color:var(--ink3);
+}
 
 /* think prompt */
 .think{
@@ -188,6 +239,11 @@ details.reveal .rv p{margin-bottom:.7em}
 .toc a::before{counter-increment:t; content:counter(t,decimal-leading-zero); color:var(--accent); font-size:.72rem}
 .toc a:hover{color:var(--accent)}
 
+/* sources */
+ol.src{margin:1.4rem 0 0; padding:0 0 0 1.2rem; font-size:.92rem; display:grid; gap:.7rem}
+ol.src li{max-width:66ch}
+ol.src a{word-break:break-word}
+
 footer.foot{
   border-top:1px solid var(--hair); margin-top:3rem; padding:2rem 0 0;
   font-family:var(--mono); font-size:.74rem; letter-spacing:.06em; color:var(--ink3);
@@ -203,6 +259,7 @@ footer.foot{
   body::before{display:none}
   details.reveal{border-color:#999}
   details.reveal .rv{display:block !important}
+  .shot img{opacity:1}
 }
 </style>
 </head>
@@ -222,8 +279,8 @@ footer.foot{
 
 <div class="topbar">
   <div class="row">
-    <a class="home" href="../../">← GlobalAI</a>
-    <span>Lecture 01 · study at home</span>
+    <a class="home" href="../../">← Lectures</a>
+    <span class="mid">Lecture 01 · v2 · the life cycle</span>
     <span class="tools">
       <button type="button" id="btn-theme">theme</button>
     </span>
@@ -236,605 +293,673 @@ footer.foot{
 <!-- ================= HERO ================= -->
 <section class="hero">
   <p class="eyebrow">GCST · B.Tech Artificial Intelligence · Year 1</p>
-  <h1>Software Development</h1>
-  <p class="lede" style="margin-top:1.2rem">How working software actually gets built, and which of these four processes your project needs this week.</p>
-  <p style="margin-top:1rem">This is the full Lecture 01, rewritten so you can work through it alone at home. Everything I said in the room is written down here, including the four discussion questions and the answers I was listening for. Read it with your own project in front of you, because half the questions ask you about it.</p>
+  <h1>The Software Development Life Cycle</h1>
+  <p class="lede" style="margin-top:1.2rem">Seven phases, seven deliverables, and every one of them already waiting in your pod folder.</p>
+  <p style="margin-top:1rem">This is version two of Lecture 01. Version one asked <em>which process model should we use</em>. This one goes underneath that question, to the thing all the models are arguing about, which is the life cycle itself. Every phase here ends with something you can do to <strong>your</strong> project this week, in the folder you already have. Nothing here is theory you have to wait to use.</p>
+  <p><a href="../">Read v1 first</a> if you have not. It covers waterfall, iterative and RAD, and this page assumes you have seen those names once.</p>
 
   <div class="toc">
-    <span class="k">What is in here · about 40 minutes</span>
+    <span class="k">What is in here · about 50 minutes</span>
     <ol>
-      <li><a href="#framing">The one question every model is answering</a></li>
-      <li><a href="#pdlc">The Program Development Life Cycle</a></li>
-      <li><a href="#waterfall">Waterfall</a></li>
-      <li><a href="#iterative">Iterative</a></li>
-      <li><a href="#rad">Rapid Application Development</a></li>
-      <li><a href="#compare">What one change actually costs</a></li>
-      <li><a href="#agents">Agentic AI: autocomplete predicts, an agent loops</a></li>
-      <li><a href="#leverage">Where an agent helps, honestly</a></li>
-      <li><a href="#git">Git and GitHub: four places your code lives</a></li>
-      <li><a href="#do">Do this now: ship v0.1</a></li>
-      <li><a href="#homework">Homework</a></li>
-      <li><a href="#recap">Which model does your project need?</a></li>
+      <li><a href="#what">What the SDLC actually is</a></li>
+      <li><a href="#count">Six phases or seven? Why the diagrams disagree</a></li>
+      <li><a href="#p1">Phase 01 · Planning</a></li>
+      <li><a href="#p2">Phase 02 · Analysis</a></li>
+      <li><a href="#p3">Phase 03 · Design</a></li>
+      <li><a href="#p4">Phase 04 · Coding</a></li>
+      <li><a href="#p5">Phase 05 · Testing</a></li>
+      <li><a href="#p6">Phase 06 · Deployment</a></li>
+      <li><a href="#p7">Phase 07 · Maintenance</a></li>
+      <li><a href="#repo">Your pod folder is already the life cycle</a></li>
+      <li><a href="#models">The models: same phases, different order</a></li>
+      <li><a href="#pick">What your pod should actually run</a></li>
+      <li><a href="#ai">Where AI sits in the cycle</a></li>
+      <li><a href="#sec">Security is not a phase</a></li>
+      <li><a href="#fail">Four ways this goes wrong</a></li>
+      <li><a href="#do">Do this now · 40 minutes</a></li>
+      <li><a href="#sources">Sources</a></li>
     </ol>
   </div>
 
   <div class="callout">
     <span class="k">How to use this page</span>
-    <p style="margin:0">When you hit a <strong>Stop and think</strong> box, actually stop. Write your answer somewhere before you open the reveal. Reading my answer first feels like learning and is not. The whole point of those four questions is that you commit to a position and then find out.</p>
+    <p style="margin:0">Open your pod folder in another tab now. Go to <code>github.com/GCST-AI/gcst</code>, then <code>projects/pod-NN/</code>. Almost every section ends with one small change to make in it. Read this page with the folder open and you finish the evening with a better project. Read it with the folder closed and you finish with a good feeling.</p>
   </div>
 </section>
 
-<!-- ================= 01 FRAMING ================= -->
-<section class="blk" id="framing">
-  <span class="snum">01 · Framing</span>
-  <h2>Every process model is answering the same three questions</h2>
+<!-- ================= 01 WHAT ================= -->
+<section class="blk" id="what">
+  <span class="snum">01 · Definition</span>
+  <h2>What the SDLC actually is</h2>
 
-  <figure>
-    <div class="figwrap"><svg viewBox="0 0 860 226" role="img" aria-label="Three questions feeding into a single box labelled a process model, with question three marked as the deciding one">
-      <rect x="16" y="20" width="248" height="66" class="s-box"></rect>
-      <rect x="306" y="20" width="248" height="66" class="s-box"></rect>
-      <rect x="596" y="20" width="248" height="66" class="s-hi"></rect>
-      <g text-anchor="middle">
-        <text x="140" y="42" class="d-sm">01</text><text x="140" y="62" class="d-lbl">what are we building?</text>
-        <text x="430" y="42" class="d-sm">02</text><text x="430" y="62" class="d-lbl">in what order?</text>
-        <text x="720" y="42" class="d-sm d-hi" style="opacity:1">03</text>
-        <text x="720" y="62" class="d-lbl d-hi">what do we do when</text>
-        <text x="720" y="76" class="d-lbl d-hi">the answer to 01 changes?</text>
-      </g>
-      <line x1="140" y1="86" x2="368" y2="146" class="s-line" marker-end="url(#ar)"></line>
-      <line x1="430" y1="86" x2="430" y2="146" class="s-line" marker-end="url(#ar)"></line>
-      <line x1="720" y1="86" x2="492" y2="146" class="s-hi" marker-end="url(#ar-hi)"></line>
-      <rect x="300" y="148" width="260" height="52" class="s-box"></rect>
-      <text x="430" y="180" class="d-lbl" text-anchor="middle">a process model</text>
-    </svg></div>
-    <figcaption>A methodology is not a philosophy. It is a stored answer to question 03.</figcaption>
+  <p>The software development life cycle is the ordered list of things that have to happen for an idea to become software real people use, and keep using. Not a philosophy. Not a certification. A list, with an order, that repeats. You can learn the whole shape of it tonight, and you will use it for the rest of your working life.</p>
+
+  <blockquote class="q">
+    “The software development lifecycle (SDLC) is a structured and iterative methodology used by development teams to build, deliver and maintain high-quality and cost-effective software systems.”
+    <cite>IBM · What is the software development life cycle?</cite>
+  </blockquote>
+
+  <p style="margin-top:1.4rem">Read that again and notice two words, <span class="mark">iterative</span> and <span class="mark">maintain</span>. Both are doing real work. The cycle does not stop at “we finished it”, and it does not run once. That is good news for you. It means a weak first attempt is normal and recoverable, not a verdict on you.</p>
+
+  <figure class="shot">
+    <img src="img/sdlc_software_development_lifecycle.jpg" alt="A ring divided into six numbered segments labelled planning, analysis, design, implementation, testing and integration, and maintenance, with the words the software development life cycle in the centre">
+    <figcaption>The standard picture. It is drawn as a ring for a reason: maintenance feeds straight back into planning. If your diagram is a straight line, it is not a life cycle, it is a schedule.</figcaption>
   </figure>
 
-  <p>You already have a project. Right now it lives in your head, a WhatsApp group, and one laptop that holds the only copy. That is not a process. That is a single point of failure with a group chat attached.</p>
-  <p><span class="mark">Question three is the one that separates the models.</span> Everyone can plan. They differ only on what happens when the plan turns out to be wrong, which it will, around week three.</p>
-  <p>Hold on to that. Waterfall, iterative and RAD are not four philosophies competing for your loyalty. They are three different answers to one question, and the right answer depends on facts about your project that you can check today.</p>
-</section>
+  <p>IBM breaks it down as “distinct, repeatable, interdependent phases”, where <strong>each phase has its own objectives and deliverables that guide the next phase</strong>. That last part is the whole mechanism. A phase is not finished because time ran out. It is finished because it produced the thing the next phase needs.</p>
+  <p>This hands you a test you can apply without any experience. When somebody asks “are we done with design?”, the answer is not how anyone feels about it. It is <em>can somebody start coding from what design produced?</em> If no, design is not done. Learn that one move and you are already ahead of most first projects.</p>
 
-<!-- ================= 02 PDLC ================= -->
-<section class="blk" id="pdlc">
-  <span class="snum">02 · Phase model</span>
-  <h2>The Program Development Life Cycle</h2>
-
-  <figure>
-    <div class="figwrap"><svg viewBox="0 0 980 306" role="img" aria-label="Six lifecycle phases in sequence above a rising curve showing the cost to fix a defect first found in each phase">
-      <g class="s-box">
-        <rect x="24" y="44" width="120" height="52"></rect><rect x="184" y="44" width="120" height="52"></rect>
-        <rect x="344" y="44" width="120" height="52"></rect><rect x="504" y="44" width="120" height="52"></rect>
-        <rect x="664" y="44" width="120" height="52"></rect><rect x="824" y="44" width="120" height="52"></rect>
-      </g>
-      <g text-anchor="middle">
-        <g class="d-sm d-hi" style="opacity:1"><text x="84" y="34">01</text><text x="244" y="34">02</text><text x="404" y="34">03</text><text x="564" y="34">04</text><text x="724" y="34">05</text><text x="884" y="34">06</text></g>
-        <g class="d-lbl"><text x="84" y="75">requirements</text><text x="244" y="75">design</text><text x="404" y="75">implementation</text><text x="564" y="75">testing</text><text x="724" y="75">deployment</text><text x="884" y="75">maintenance</text></g>
-        <g class="d-xs"><text x="164" y="62">spec</text><text x="324" y="62">plans</text><text x="484" y="62">code</text><text x="644" y="62">report</text><text x="804" y="62">ship</text></g>
-      </g>
-      <g class="s-line">
-        <line x1="146" y1="70" x2="182" y2="70" marker-end="url(#ar)"></line><line x1="306" y1="70" x2="342" y2="70" marker-end="url(#ar)"></line>
-        <line x1="466" y1="70" x2="502" y2="70" marker-end="url(#ar)"></line><line x1="626" y1="70" x2="662" y2="70" marker-end="url(#ar)"></line>
-        <line x1="786" y1="70" x2="822" y2="70" marker-end="url(#ar)"></line>
-      </g>
-      <g class="s-faint"><line x1="84" y1="100" x2="84" y2="254"></line><line x1="244" y1="100" x2="244" y2="246"></line><line x1="404" y1="100" x2="404" y2="232"></line><line x1="564" y1="100" x2="564" y2="206"></line><line x1="724" y1="100" x2="724" y2="174"></line><line x1="884" y1="100" x2="884" y2="136"></line></g>
-      <line x1="24" y1="272" x2="944" y2="272" class="s-line"></line>
-      <polyline points="84,258 244,250 404,236 564,210 724,178 884,140" class="s-hi"></polyline>
-      <g class="f-hi"><circle cx="84" cy="258" r="3.5"></circle><circle cx="244" cy="250" r="3.5"></circle><circle cx="404" cy="236" r="3.5"></circle><circle cx="564" cy="210" r="3.5"></circle><circle cx="724" cy="178" r="3.5"></circle><circle cx="884" cy="140" r="3.5"></circle></g>
-      <g class="d-sm d-hi" text-anchor="middle" style="opacity:1"><text x="84" y="248">1×</text><text x="244" y="240">2×</text><text x="404" y="226">5×</text><text x="564" y="200">15×</text><text x="724" y="168">40×</text><text x="884" y="130">100×</text></g>
-      <text x="24" y="292" class="d-xs">relative cost to fix a defect that is first discovered in that phase</text>
-    </svg></div>
-    <figcaption>The lifecycle is the list of things that must happen. The models argue about the order and the loop, never about the list.</figcaption>
-  </figure>
-
-  <p>Six phases: <strong>requirements, design, implementation, testing, deployment, maintenance</strong>. Nobody disputes this list. Every model on this page runs all six. They disagree about the order you run them in and how many times.</p>
-  <p>The curve underneath is the important part. Those multipliers are the whole reason process models exist. A misunderstanding caught in a conversation costs one unit. The same misunderstanding caught by a user after release costs about a hundred, because by then it is buried under design decisions, code, tests and other people's work that all assumed it was right.</p>
-  <p>You will not feel this in a two-week assignment. You will feel it hard in a four-month project, which is what you are in now.</p>
+  <div class="cards">
+    <div class="card"><span class="k">Why it exists</span><p>Software is built by several people, over months, for users who are not in the room. The SDLC is what lets those three facts coexist without the project quietly falling apart. It was built by people who watched projects fail and wrote down why.</p></div>
+    <div class="card"><span class="k">What it gives you</span><p>IBM lists better software, higher productivity, less risk, more transparency, better collaboration, saner use of time and happier users. Microsoft's list is the same list with different nouns. Two rivals agreeing this closely is worth noticing.</p></div>
+    <div class="card"><span class="k">What it is not</span><p>A guarantee. You can run every phase properly and still build something nobody wants. The cycle protects you from chaos, not from being wrong. Talking to users is what protects you from being wrong.</p></div>
+  </div>
 
   <div class="think">
     <span class="k">Stop and think · 01</span>
-    <p class="qq">Your project has no written requirements. Neither did the first version of WhatsApp. So what is the requirements phase actually buying, and who is it buying it for?</p>
+    <p class="qq">You are one person, building one page, over one weekend. Is the SDLC overhead you should skip?</p>
     <p class="how">Two minutes. Write one sentence before you open this.</p>
     <details class="reveal"><summary>What I was listening for</summary>
       <div class="rv">
-        <p>Listen for the word <b>later</b>. A requirements document is insurance against a disagreement that has not happened yet.</p>
-        <p>If you are the only person who will ever touch the code and you ship on Friday, the premium is not worth paying. Change either of those two facts, add a second developer or add six months, and it becomes the cheapest thing you will buy all semester.</p>
-        <p>Now check your own situation. You are on a pod, so there is a second person. Your project runs past November, so there is time. Both facts are already true for you.</p>
+        <p>You cannot skip it. You can only skip <b>writing it down</b>.</p>
+        <p>Even alone on a Saturday you decide what to build, work out what it needs, sketch it, code it, check it, put it somewhere, and fix it when it breaks. That is seven phases. They happen in your head in four seconds each, and you have been doing it correctly for years without a name for it.</p>
+        <p>The document is the optional part. The phases are not. What changes with team size and project length is how much has to leave your head and become text another person can read. You are on a pod, and your project runs to November, so a fair amount of it does.</p>
       </div>
     </details>
   </div>
 </section>
 
-<!-- ================= 03 WATERFALL ================= -->
-<section class="blk" id="waterfall">
-  <span class="snum">03 · Model 01</span>
-  <h2>Waterfall</h2>
+<!-- ================= 02 COUNT ================= -->
+<section class="blk" id="count">
+  <span class="snum">02 · Reading the diagrams</span>
+  <h2>Six phases or seven? Why the diagrams disagree</h2>
 
-  <p>Every phase is completed and signed off before the next one starts. The output of one phase is the only input to the next. Water does not flow uphill, which is the whole point of the name.</p>
+  <p>Search for “SDLC” and you get a hundred coloured wheels that do not match. Six stages here, seven there, one calls it <em>coding</em> and the next calls it <em>implementation</em>. Students lose an hour deciding which one is correct. Save yourself the hour. None of them is correct, because it is not that kind of question.</p>
 
-  <figure>
-    <div class="figwrap"><svg viewBox="0 0 780 440" role="img" aria-label="Six waterfall phases cascading downward, with a marked backflow arrow showing that a change found late invalidates every phase above it">
-      <g class="s-box">
-        <rect x="30" y="24" width="190" height="44"></rect><rect x="130" y="90" width="190" height="44"></rect>
-        <rect x="230" y="156" width="190" height="44"></rect><rect x="330" y="222" width="190" height="44"></rect>
-        <rect x="430" y="288" width="190" height="44"></rect><rect x="530" y="354" width="190" height="44"></rect>
-      </g>
-      <g class="d-lbl" text-anchor="middle">
-        <text x="125" y="52">requirements</text><text x="225" y="118">design</text><text x="325" y="184">implementation</text>
-        <text x="425" y="250">testing</text><text x="525" y="316">deployment</text><text x="625" y="382">maintenance</text>
-      </g>
-      <g class="s-line">
-        <line x1="180" y1="68" x2="180" y2="88" marker-end="url(#ar)"></line><line x1="280" y1="134" x2="280" y2="154" marker-end="url(#ar)"></line>
-        <line x1="380" y1="200" x2="380" y2="220" marker-end="url(#ar)"></line><line x1="480" y1="266" x2="480" y2="286" marker-end="url(#ar)"></line>
-        <line x1="580" y1="332" x2="580" y2="352" marker-end="url(#ar)"></line>
-      </g>
-      <g class="d-xs"><text x="192" y="82">sign-off</text><text x="292" y="148">sign-off</text><text x="392" y="214">sign-off</text><text x="492" y="280">sign-off</text><text x="592" y="346">sign-off</text></g>
-      <path d="M430,310 L16,310 L16,46 L28,46" class="s-hi-d" marker-end="url(#ar-hi)"></path>
-      <g class="d-sm d-hi" style="opacity:1"><text x="30" y="248">a change discovered here</text><text x="30" y="262">invalidates every phase above it</text><text x="30" y="276">and costs a full re-plan</text></g>
-    </svg></div>
-    <figcaption>The cascade is cheap. The marked arrow is what waterfall actually charges you for.</figcaption>
-  </figure>
+  <div class="shots">
+    <figure class="shot">
+      <img src="img/7%20stages%20of%20software%20development%20life%20cycle.png" alt="Seven circles in a zigzag row labelled planning, analysis, design, coding, testing, deployment and maintenance, each with a one-line description">
+      <figcaption>Seven stages, with analysis split out from planning.</figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="img/software%20development%20life%20cycle.png" alt="A ring divided into six segments labelled analysis, UI and UX design, implementation, testing, deployment and maintenance">
+      <figcaption>Six stages, planning folded into analysis, design renamed UI/UX.</figcaption>
+    </figure>
+  </div>
+
+  <p>Both pictures describe the same work. They differ on where they draw the lines, and the lines are a naming convention, not a law. Take a habit from this that will serve you in every subject you study. <span class="mark">When two sources disagree on the count, compare the deliverables, not the labels.</span> If both produce a requirements document, both have an analysis phase, whatever it is called.</p>
+
+  <p>Where it does matter, the two most careful sources agree. IBM and Microsoft both land on seven, and on the same seven.</p>
+
+  <div class="figwrap">
+  <table class="tbl">
+    <thead>
+      <tr><th>#</th><th>IBM</th><th>Microsoft</th><th>The deliverable both name</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>Planning</td><td>Planning</td><td>Scope, goals, a project plan</td></tr>
+      <tr><td>2</td><td>Analysis</td><td>Analysis</td><td>Detailed requirements</td></tr>
+      <tr><td>3</td><td>Design</td><td>Design</td><td>Architecture, mockups, an SDD</td></tr>
+      <tr><td>4</td><td>Coding</td><td>Development</td><td>Working software</td></tr>
+      <tr><td>5</td><td>Testing</td><td>Testing</td><td>Test results, bug reports</td></tr>
+      <tr><td>6</td><td>Deployment</td><td>Deployment</td><td>Software users can reach</td></tr>
+      <tr><td>7</td><td>Maintenance</td><td>Maintenance</td><td>Patches and improvements</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p style="margin-top:1.4rem">One word differs out of seven. That is the entire disagreement between two of the largest software companies on earth, and it is a synonym. So stop worrying about which diagram to trust. Use these seven for the rest of the page and for your project.</p>
+</section>
+
+<!-- ================= PHASE 1 ================= -->
+<section class="blk" id="p1" style="border-top:1px solid var(--hair)">
+  <span class="snum">03 · Phase 01</span>
+  <div class="ph"><span class="no">01</span><h2 style="margin:0">Planning</h2></div>
+
+  <p>Planning decides what the project is <em>for</em>, how big it is allowed to be, and what it is not going to do. IBM is blunt about that second half. The phase aims “to both pinpoint the project's goals and establish what the project does not need, which helps prevent it from becoming too bloated.”</p>
+
+  <p>The output is usually an initial <strong>software requirement specification</strong>, an SRS, describing what the software does, what it needs, what could go wrong and roughly when it happens. Microsoft frames the same phase around feasibility. Is this doable, by these people, in this time. Answering that honestly on day one is a strength, not a lack of ambition.</p>
+
+  <div class="deliv">
+    <span>Deliverable</span>
+    A written scope: what it does, who for, and an explicit list of what you are not building.
+  </div>
 
   <div class="cards">
-    <div class="card"><span class="k">Where it still wins</span><p>Launch vehicle software. Pacemaker firmware. Payment settlement. Anywhere the cost of being wrong in production is measured in lives or in crores, and the requirements genuinely do not move.</p></div>
-    <div class="card"><span class="k">Where it fails you</span><p>Your project. You do not yet know what you are building, so a signed-off spec is just a guess with a signature on it.</p></div>
-    <div class="card"><span class="k">The misreading</span><p>Waterfall is not slow at building. It is slow at changing its mind. Those are different weaknesses and only one of them is yours.</p></div>
+    <div class="card"><span class="k">In your pod, this week</span><p>Write the one sentence that goes in <code>&lt;p class="summary"&gt;</code> on your <code>index.html</code>. Then list, in your own notes, five things people will ask for that you are refusing to build. Twenty minutes of work that pays you back all semester.</p></div>
+    <div class="card"><span class="k">The test of a good scope</span><p>Somebody outside your pod reads the sentence and can tell you, correctly, what your project does. If they guess wrong, the sentence is the problem, not them. Rewrite it and try again on someone new.</p></div>
+    <div class="card"><span class="k">How it fails</span><p>No written non-goals. Every suggestion in the group chat becomes a feature, because nothing on paper says it should not. That is scope creep, and it ends more student projects than difficulty ever does.</p></div>
   </div>
 
   <div class="think">
     <span class="k">Stop and think · 02</span>
-    <p class="qq">A rocket launches once. A website deploys forty times a day. Waterfall is called obsolete and still ships rockets. What property of the problem decides the process?</p>
-    <p class="how">Two minutes. One sentence. Name the property.</p>
+    <p class="qq">Name three things your project will deliberately not do. If you cannot, what does that tell you about your scope?</p>
+    <p class="how">Three minutes. Write them down properly, they go in your notes.</p>
     <details class="reveal"><summary>What I was listening for</summary>
       <div class="rv">
-        <p>The word you are looking for is <b>reversibility</b>.</p>
-        <p>If a bad decision can be undone cheaply, iterate and find out by doing. If it cannot be undone at all, spend the time up front, because up front is the only time you have.</p>
-        <p>Ask it of every decision in your project this week. <em>Can I take this back on Monday?</em> Most of yours you can, which tells you which model to use.</p>
+        <p>It tells you your scope is <b>everything</b>, which is the same as no scope at all.</p>
+        <p>A boundary you cannot describe is a boundary you cannot defend. In week seven somebody will say “it should also do X, that is easy”, and with nothing written down, the honest answer is yes.</p>
+        <p>Good non-goals are specific and slightly painful. “No login.” “English only for now.” “Works on one phone model, we will not chase the rest.” If your three cost you nothing to give up, you have written excuses rather than non-goals. Saying no to good ideas is how the one idea you chose gets finished.</p>
       </div>
     </details>
   </div>
-
-  <figure>
-    <div class="figwrap"><svg viewBox="0 0 420 96" style="min-width:360px" role="img" aria-label="A scale from cheap to undo, favouring iteration, to impossible to undo, favouring planning">
-      <line x1="20" y1="48" x2="400" y2="48" class="s-line"></line>
-      <g class="s-line"><line x1="20" y1="42" x2="20" y2="54"></line><line x1="400" y1="42" x2="400" y2="54"></line></g>
-      <circle cx="128" cy="48" r="5" class="f-hi"></circle>
-      <text x="20" y="32" class="d-sm">cheap to undo</text>
-      <text x="400" y="32" class="d-sm" text-anchor="end">impossible to undo</text>
-      <text x="20" y="72" class="d-xs">iterate</text>
-      <text x="400" y="72" class="d-xs" text-anchor="end">plan first</text>
-      <text x="128" y="90" class="d-xs d-hi" text-anchor="middle" style="opacity:1">your project sits here</text>
-    </svg></div>
-  </figure>
 </section>
 
-<!-- ================= 04 ITERATIVE ================= -->
-<section class="blk" id="iterative">
-  <span class="snum">04 · Model 02</span>
-  <h2>Iterative</h2>
+<!-- ================= PHASE 2 ================= -->
+<section class="blk" id="p2">
+  <span class="snum">04 · Phase 02</span>
+  <div class="ph"><span class="no">02</span><h2 style="margin:0">Analysis</h2></div>
 
-  <p>Run the whole lifecycle in a short lap. Ship something real. Look at what happened. Run it again. The scope of a lap is small, but the list of phases inside it is the full six.</p>
+  <p>Analysis turns the high-level idea into something you could actually build from. IBM describes it as moving “from a high-level idea to a practical implementation plan”, which means gathering user requirements, market research, feasibility testing, evaluating prototypes, allocating resources. Microsoft's outputs are system specifications, use-case diagrams, data-flow diagrams.</p>
 
-  <figure>
-    <div class="figwrap"><svg viewBox="0 0 920 300" role="img" aria-label="Three short laps of the full lifecycle, each one shipping a real release, with user feedback flowing from each release into the next lap">
-      <g class="s-line"><circle cx="130" cy="106" r="58"></circle><circle cx="460" cy="106" r="58"></circle><circle cx="790" cy="106" r="58"></circle></g>
-      <g class="f-hi"><polygon points="130,48 138,60 122,60"></polygon><polygon points="460,48 468,60 452,60"></polygon><polygon points="790,48 798,60 782,60"></polygon></g>
-      <g class="s-line" stroke-width="2">
-        <line x1="130" y1="48" x2="130" y2="40"></line><line x1="188" y1="106" x2="196" y2="106"></line><line x1="130" y1="164" x2="130" y2="172"></line><line x1="72" y1="106" x2="64" y2="106"></line>
-        <line x1="460" y1="48" x2="460" y2="40"></line><line x1="518" y1="106" x2="526" y2="106"></line><line x1="460" y1="164" x2="460" y2="172"></line><line x1="402" y1="106" x2="394" y2="106"></line>
-        <line x1="790" y1="48" x2="790" y2="40"></line><line x1="848" y1="106" x2="856" y2="106"></line><line x1="790" y1="164" x2="790" y2="172"></line><line x1="732" y1="106" x2="724" y2="106"></line>
-      </g>
-      <g class="d-lbl" text-anchor="middle"><text x="130" y="103">lap 1</text><text x="460" y="103">lap 2</text><text x="790" y="103">lap 3</text></g>
-      <g class="d-xs" text-anchor="middle"><text x="130" y="120">2 weeks</text><text x="460" y="120">2 weeks</text><text x="790" y="120">2 weeks</text></g>
-      <g class="s-hi"><line x1="216" y1="106" x2="376" y2="106" marker-end="url(#ar-hi)"></line><line x1="546" y1="106" x2="706" y2="106" marker-end="url(#ar-hi)"></line></g>
-      <g class="d-xs d-hi" text-anchor="middle" style="opacity:1"><text x="296" y="98">what users did with v0.1</text><text x="626" y="98">what users did with v0.2</text></g>
-      <g class="s-faint"><line x1="130" y1="176" x2="130" y2="238"></line><line x1="460" y1="176" x2="460" y2="238"></line><line x1="790" y1="176" x2="790" y2="238"></line></g>
-      <line x1="24" y1="240" x2="896" y2="240" class="s-line"></line>
-      <text x="24" y="232" class="d-xs">shipped to real users</text>
-      <g class="f-hi"><rect x="108" y="248" width="44" height="7"></rect><rect x="418" y="248" width="84" height="7"></rect><rect x="725" y="248" width="130" height="7"></rect></g>
-      <g class="d-sm" text-anchor="middle"><text x="130" y="274">v0.1</text><text x="460" y="274">v0.2</text><text x="790" y="274">v0.3</text></g>
-      <text x="24" y="292" class="d-xs">each lap runs the whole lifecycle. requirements, design, build, test. the scope is small, the list is not.</text>
-    </svg></div>
-    <figcaption>The unit of work is the lap, not the feature. Every lap ends with something a real person can open.</figcaption>
-  </figure>
+  <p>The word doing all the work is <strong>gathering</strong>. Requirements are collected from people who have the problem. They are not invented by the team around a table. This is the phase students skip hardest, because inventing is faster and feels more creative. It is also the phase where a single afternoon of effort separates a project that lands from one that quietly misses.</p>
+
+  <div class="deliv">
+    <span>Deliverable</span>
+    A written list of what the software must do, in the words of people who are not on your pod.
+  </div>
 
   <div class="cards">
-    <div class="card"><span class="k">The rule</span><p>If a lap ends with nothing shipped, it was not a lap. It was two weeks.</p></div>
-    <div class="card"><span class="k">Your lap 1</span><p>A page that loads and says what your project is. That is a real release. Ship it Friday.</p></div>
-    <div class="card"><span class="k">The trade</span><p>You pay for it in rework, because you build on things you later change. You buy information with that money.</p></div>
+    <div class="card"><span class="k">In your pod, this week</span><p>Find three people who have the problem your project solves. Ask what they do about it now. Write down their exact words. Those words go in the <b>Why we built it</b> section of your page.</p></div>
+    <div class="card"><span class="k">Why the exact words</span><p>“Farmers cannot identify crop disease early” is your sentence. “I ask my neighbour and by then half the field is gone” is theirs. The second one tells you what to build. The first one does not.</p></div>
+    <div class="card"><span class="k">How it fails</span><p>IBM warns that teams who skip this “might go through many wasted work cycles before discovering the software's actual needs”. You build for four months, then meet a user in week fifteen. Three messages this week prevent that entirely.</p></div>
+  </div>
+
+  <div class="callout">
+    <span class="k">The cheapest phase you will ever run</span>
+    <p style="margin:0">Three conversations cost you an afternoon. Finding out in November that your project solves a problem nobody has costs you the semester. This is the best return on time anywhere in the life cycle, and it needs no code, no laptop and nobody's permission. You can start it today.</p>
+  </div>
+</section>
+
+<!-- ================= PHASE 3 ================= -->
+<section class="blk" id="p3">
+  <span class="snum">05 · Phase 03</span>
+  <div class="ph"><span class="no">03</span><h2 style="margin:0">Design</h2></div>
+
+  <p>Design decides the shape of the thing before you build it. Navigation, screens, how data is stored, which parts talk to which other parts. IBM's list is “outlining the software's navigation, user interfaces, database design and more”, collected into a <strong>software design document</strong> that developers use as a roadmap while coding.</p>
+
+  <p>Two ideas from this phase are worth more to you than the document. The first is <span class="mark">modular design</span>, meaning self-contained units of code that each do one job. IBM's reason for it is not elegance, it is throughput. Modules “enable developers to reuse existing modules and work on multiple parts of the software at once, which can reduce bottlenecks”. On a pod of five, that is the difference between five people working and one person working while four wait.</p>
+  <p>The second is <span class="mark">threat modelling</span>, and it belongs here rather than at the end. More on that in section 14.</p>
+
+  <div class="deliv">
+    <span>Deliverable</span>
+    Sketches of every screen, and a decision about which file each piece of code goes in.
+  </div>
+
+  <div class="cards">
+    <div class="card"><span class="k">In your pod, this week</span><p>On paper, draw every screen of your demo. Then list the files you expect in <code>src/</code> and put one person's name next to each. That list is your design document. Paper counts.</p></div>
+    <div class="card"><span class="k">Design is a division of labour</span><p>Two people cannot build the same project at once until somebody decides where the seams are. That decision is design, and it is why five people with no design produce less than two people with one.</p></div>
+    <div class="card"><span class="k">How it fails</span><p>Everyone opens <code>demo/index.html</code> at the same time. Two people write the same function, both edit the same lines, and GitHub asks you to resolve a conflict you never needed to have.</p></div>
   </div>
 
   <div class="think">
     <span class="k">Stop and think · 03</span>
-    <p class="qq">Iteration means shipping something incomplete on purpose. Your instinct is to hide it until it is good. Which instinct protects the project, and which one protects you?</p>
-    <p class="how">Two minutes. Be honest, nobody is grading this one.</p>
+    <p class="qq">Your pod has five people and one HTML file. What is the actual limit on how fast you can go, and which phase sets it?</p>
+    <p class="how">Two minutes. Name the phase.</p>
     <details class="reveal"><summary>What I was listening for</summary>
       <div class="rv">
-        <p>Hiding it protects <b>you</b>. That is not a character flaw, it is the normal reaction to being judged, and every professional developer has it.</p>
-        <p>But nothing you learn in private is feedback. A rough version in front of one real user on Friday tells you more than a perfect version in your head in November, and it tells you while you can still act on it.</p>
+        <p><b>Design</b> sets it. The limit is not typing speed, it is the number of pieces that can be worked on independently.</p>
+        <p>One file means one editor at a time and a merge conflict every time you break that rule. Five files with five owners means five people working at once, and the integration cost gets paid once, deliberately, instead of continuously by accident.</p>
+        <p>This is why the design phase survives in teams that have thrown out every other document. It is not paperwork. It is the thing that makes your whole pod useful at the same time.</p>
       </div>
     </details>
   </div>
-
-  <figure>
-    <div class="figwrap"><svg viewBox="0 0 460 108" style="min-width:380px" role="img" aria-label="Information learned stays flat while a project is hidden and rises once it is shown to users">
-      <line x1="24" y1="86" x2="440" y2="86" class="s-line"></line>
-      <line x1="24" y1="86" x2="24" y2="18" class="s-line"></line>
-      <text x="18" y="14" class="d-xs" text-anchor="start">what you learn</text>
-      <polyline points="24,82 200,80 210,58 260,44 340,32 430,26" class="s-hi"></polyline>
-      <line x1="205" y1="18" x2="205" y2="90" class="s-hi-d"></line>
-      <text x="200" y="102" class="d-xs" text-anchor="end">hidden</text>
-      <text x="212" y="102" class="d-xs d-hi" style="opacity:1">shown to one real user</text>
-    </svg></div>
-  </figure>
 </section>
 
-<!-- ================= 05 RAD ================= -->
-<section class="blk" id="rad">
-  <span class="snum">05 · Model 03</span>
-  <h2>Rapid Application Development</h2>
+<!-- ================= PHASE 4 ================= -->
+<section class="blk" id="p4">
+  <span class="snum">06 · Phase 04</span>
+  <div class="ph"><span class="no">04</span><h2 style="margin:0">Coding</h2></div>
 
-  <p>Fix the date, not the scope. Build rough prototypes of several modules in parallel, put each one in front of a real user, and let their reaction decide what the next prototype contains.</p>
+  <p>The phase everyone thinks is the whole job. Code gets written from the design document and the requirements, interfaces get built, and the project starts producing something you can open. Microsoft names the output plainly. Functional software, a code repository, version control records.</p>
 
-  <figure>
-    <div class="figwrap"><svg viewBox="0 0 920 344" role="img" aria-label="Loose requirements feeding a fixed timebox containing three parallel build and show cycles driven by user feedback, converging into integration and delivery">
-      <rect x="20" y="138" width="120" height="56" class="s-box"></rect>
-      <text x="80" y="162" class="d-lbl" text-anchor="middle">loose</text>
-      <text x="80" y="178" class="d-lbl" text-anchor="middle">requirements</text>
-      <line x1="142" y1="166" x2="168" y2="166" class="s-line" marker-end="url(#ar)"></line>
-      <rect x="170" y="26" width="540" height="280" class="s-hi-d"></rect>
-      <text x="170" y="18" class="d-sm d-hi" style="opacity:1">timebox · the date is fixed · the scope is not</text>
-      <g class="d-xs"><text x="180" y="62">module A</text><text x="180" y="140">module B</text><text x="180" y="218">module C</text></g>
-      <g class="s-box">
-        <rect x="264" y="59" width="76" height="30"></rect><rect x="396" y="59" width="112" height="30"></rect>
-        <rect x="264" y="137" width="76" height="30"></rect><rect x="396" y="137" width="112" height="30"></rect>
-        <rect x="264" y="215" width="76" height="30"></rect><rect x="396" y="215" width="112" height="30"></rect>
-      </g>
-      <g class="d-xs" text-anchor="middle" style="opacity:.85">
-        <text x="302" y="78">build</text><text x="452" y="78">show to users</text>
-        <text x="302" y="156">build</text><text x="452" y="156">show to users</text>
-        <text x="302" y="234">build</text><text x="452" y="234">show to users</text>
-      </g>
-      <g class="s-line">
-        <line x1="342" y1="74" x2="392" y2="74" marker-end="url(#ar)"></line>
-        <line x1="342" y1="152" x2="392" y2="152" marker-end="url(#ar)"></line>
-        <line x1="342" y1="230" x2="392" y2="230" marker-end="url(#ar)"></line>
-      </g>
-      <g class="s-hi">
-        <path d="M452,89 C452,114 302,114 302,91" marker-end="url(#ar-hi)"></path>
-        <path d="M452,167 C452,192 302,192 302,169" marker-end="url(#ar-hi)"></path>
-        <path d="M452,245 C452,270 302,270 302,247" marker-end="url(#ar-hi)"></path>
-      </g>
-      <text x="377" y="126" class="d-xs d-hi" text-anchor="middle" style="opacity:1">five of these in six weeks</text>
-      <g class="s-line">
-        <line x1="510" y1="74" x2="594" y2="146" marker-end="url(#ar)"></line>
-        <line x1="510" y1="152" x2="594" y2="156" marker-end="url(#ar)"></line>
-        <line x1="510" y1="230" x2="594" y2="166" marker-end="url(#ar)"></line>
-      </g>
-      <rect x="596" y="126" width="96" height="60" class="s-box"></rect>
-      <text x="644" y="161" class="d-lbl" text-anchor="middle">integrate</text>
-      <line x1="712" y1="156" x2="756" y2="156" class="s-line" marker-end="url(#ar)"></line>
-      <rect x="758" y="132" width="132" height="48" class="s-box"></rect>
-      <text x="824" y="161" class="d-lbl" text-anchor="middle">deliver</text>
-    </svg></div>
-    <figcaption>The marked loops are the engine. Remove the user from the room and RAD collapses into guessing at speed.</figcaption>
-  </figure>
+  <p>Note that last one. <strong>The commit history is a deliverable of this phase.</strong> Not a side effect. If your project exists only as files on one laptop, the coding phase has produced code but no record of it, and every question starting with “when did this break” becomes unanswerable. Commit often and your past self keeps helping your future self.</p>
+
+  <div class="deliv">
+    <span>Deliverable</span>
+    Working code in the repository, with a commit history that shows how it got there.
+  </div>
 
   <div class="cards">
-    <div class="card"><span class="k">The trade</span><p>You spend code quality to buy information speed, and you do it deliberately. Prototypes are meant to be thrown away.</p></div>
-    <div class="card"><span class="k">Needs</span><p>A real user who will look at it weekly, small teams that can work in parallel, and modules that can be built separately.</p></div>
-    <div class="card"><span class="k">Breaks when</span><p>No user is available, or the system needs to be correct more than it needs to be liked. Nobody RADs a banking ledger.</p></div>
+    <div class="card"><span class="k">In your pod, this week</span><p>Build in <code>demo/index.html</code> and <code>src/</code>. Commit on every day you write code, even when it is broken. A broken commit is recoverable. An uncommitted week is not.</p></div>
+    <div class="card"><span class="k">Reviews start here</span><p>IBM notes that many teams run code reviews during this phase rather than waiting for testing, because a bug caught by a teammate on Tuesday is far cheaper than the same bug caught by a user in November. Read each other's work. It is the fastest way to improve.</p></div>
+    <div class="card"><span class="k">How it fails</span><p>Coding starts on day one and never stops. No requirements, no design, no tests, and every question answered by writing more code. That is the big bang model, and section 11 explains why it only works for tiny things.</p></div>
+  </div>
+</section>
+
+<!-- ================= PHASE 5 ================= -->
+<section class="blk" id="p5">
+  <span class="snum">07 · Phase 05</span>
+  <div class="ph"><span class="no">05</span><h2 style="margin:0">Testing</h2></div>
+
+  <p>Testing is the phase where you actively try to make your own software fail. Unit, integration, system and acceptance testing, plus a look for security holes. Then you fix what was found and send it back to be tested again, a loop inside a loop. Finding your own bug is a win, not an embarrassment.</p>
+
+  <p>Two numbers from IBM are worth holding on to. Software testing can account for <span class="mark">almost 33% of system development costs</span>. Nobody simply cuts it, because skipping testing does not remove the cost, it moves the cost to the phase where it is most expensive to pay. The opposite failure is real too. Teams chase a perfect release and never ship.</p>
+
+  <p>The modern answer to that tension is <strong>continuous testing</strong>. IBM puts it this way. “Testing is not limited to a single phase of the SDLC. Rather, code is tested throughout the entire software development process.” Testing sits at phase five because diagrams need an order. In practice it runs alongside everything.</p>
+
+  <div class="deliv">
+    <span>Deliverable</span>
+    A written record of what you tried, what broke, and what you did about it.
+  </div>
+
+  <div class="cards">
+    <div class="card"><span class="k">In your pod, this week</span><p>Your <code>test/</code> folder is empty. Put one file in it listing every step a visitor takes through your demo, and what should happen at each step. Walk it yourself. Note every place reality differs.</p></div>
+    <div class="card"><span class="k">The test that finds the most bugs</span><p>Hand your phone to someone who has never seen the project and say nothing. Do not help. Watch where they get stuck. Ten minutes of this beats an hour of clicking your own happy path.</p></div>
+    <div class="card"><span class="k">How it fails</span><p>Only the author tests it, only on their own machine, only doing the thing it was built to do. Every real user starts by doing something you never tried, which is exactly why their five minutes are worth so much.</p></div>
   </div>
 
   <div class="think">
     <span class="k">Stop and think · 04</span>
-    <p class="qq">RAD trades code quality for speed and calls that a strategy. Name one thing in your project you should deliberately build badly this week. Now defend it.</p>
-    <p class="how">Three minutes. I want a specific file or feature, not a category.</p>
+    <p class="qq">Testing is a third of the cost. Your project has no budget and no QA team. So what is the honest version of testing for a pod, and what are you giving up?</p>
+    <p class="how">Three minutes. Be specific about the trade.</p>
     <details class="reveal"><summary>What I was listening for</summary>
       <div class="rv">
-        <p>The right answers are the parts you were going to throw away anyway. <b>Hardcode the data. Fake the login. Skip the database and use a JavaScript array.</b></p>
-        <p>Build badly everything that only exists to prove the idea works, and build carefully the one thing your project is actually about.</p>
-        <p>If you cannot name which one that is, that is the real finding of this exercise, and it is worth more than the answer would have been.</p>
+        <p>The honest version is <b>one written walkthrough and one stranger</b>, repeated every lap. Forty minutes a fortnight, and it catches most of what would embarrass you at a demo. That is a very good trade.</p>
+        <p>What you give up is real coverage. You will not catch the rare path, the slow network, the odd browser, or anything that only appears under load. You are trading breadth for the two or three failures that hit the most people, and for a student project that is the right call.</p>
+        <p>The part that is not optional is <b>writing it down</b>. An untested project and a project tested only in someone's memory are the same project on the day that person is unavailable.</p>
       </div>
     </details>
   </div>
 </section>
 
-<!-- ================= 06 COMPARISON ================= -->
-<section class="blk" id="compare">
-  <span class="snum">06 · Side by side</span>
-  <h2>Same team, same project, one requirement changes in week three</h2>
+<!-- ================= PHASE 6 ================= -->
+<section class="blk" id="p6">
+  <span class="snum">08 · Phase 06</span>
+  <div class="ph"><span class="no">06</span><h2 style="margin:0">Deployment</h2></div>
 
-  <figure>
-    <div class="figwrap"><svg viewBox="0 0 940 322" role="img" aria-label="A timeline comparison showing that a requirement change in week three costs waterfall three weeks of rework, iterative half a lap, and RAD two days">
-      <g class="s-line"><line x1="150" y1="48" x2="870" y2="48"></line></g>
-      <g class="s-line"><line x1="150" y1="44" x2="150" y2="52"></line><line x1="270" y1="44" x2="270" y2="52"></line><line x1="390" y1="44" x2="390" y2="52"></line><line x1="510" y1="44" x2="510" y2="52"></line><line x1="630" y1="44" x2="630" y2="52"></line><line x1="750" y1="44" x2="750" y2="52"></line><line x1="870" y1="44" x2="870" y2="52"></line></g>
-      <g class="d-xs" text-anchor="middle"><text x="150" y="38">w0</text><text x="270" y="38">w2</text><text x="390" y="38">w4</text><text x="510" y="38">w6</text><text x="630" y="38">w8</text><text x="750" y="38">w10</text><text x="870" y="38">w12</text></g>
-      <line x1="330" y1="56" x2="330" y2="300" class="s-hi-d"></line>
-      <text x="330" y="20" class="d-sm d-hi" text-anchor="middle" style="opacity:1">requirement changes here</text>
+  <p>Deployment puts the software where users can reach it. IBM makes the point that this is not only a technical act. “The goal of this phase isn't just to get the software into the hands of users.” It is that users understand how to use it, with minimal disruption. Manuals, training, a beta release to a limited group before general availability.</p>
 
-      <text x="24" y="94" class="d-lbl">waterfall</text><text x="24" y="110" class="d-xs d-hi" style="opacity:1">costs three weeks</text>
-      <rect x="150" y="80" width="540" height="20" class="s-box"></rect>
-      <text x="420" y="94" class="d-xs" text-anchor="middle">one delivery, planned for w9</text>
-      <rect x="690" y="80" width="180" height="20" fill="url(#hatch)" stroke="var(--accent)" stroke-width="1"></rect>
-      <text x="780" y="118" class="d-xs d-hi" text-anchor="middle" style="opacity:1">rework. delivery slips to w12</text>
+  <p>You have an advantage most professional teams do not. Your deployment is <strong>a commit</strong>. Press the green button, wait two minutes, and the change is live at your pod address for anyone in the world. No server, no pipeline, no release meeting. The most expensive step in most projects is nearly free in yours. Use it, and let your project be visible from week three.</p>
 
-      <text x="24" y="178" class="d-lbl">iterative</text><text x="24" y="194" class="d-xs d-hi" style="opacity:1">costs half a lap</text>
-      <line x1="150" y1="172" x2="870" y2="172" class="s-line"></line>
-      <g class="s-box" fill="currentColor"><rect x="264" y="166" width="12" height="12"></rect><rect x="504" y="166" width="12" height="12"></rect><rect x="624" y="166" width="12" height="12"></rect><rect x="744" y="166" width="12" height="12"></rect><rect x="864" y="166" width="12" height="12"></rect></g>
-      <rect x="384" y="166" width="12" height="12" class="f-hi"></rect>
-      <text x="404" y="158" class="d-xs d-hi" style="opacity:1">absorbed by the w4 release</text>
-      <text x="150" y="202" class="d-xs">a release every two weeks, all the way through</text>
+  <div class="deliv">
+    <span>Deliverable</span>
+    A live address a stranger can open, that shows the current state of the work.
+  </div>
 
-      <text x="24" y="262" class="d-lbl">RAD</text><text x="24" y="278" class="d-xs d-hi" style="opacity:1">costs two days</text>
-      <line x1="150" y1="256" x2="630" y2="256" class="s-line"></line>
-      <g class="s-line" stroke-width="1.6"><line x1="210" y1="250" x2="210" y2="262"></line><line x1="270" y1="250" x2="270" y2="262"></line><line x1="450" y1="250" x2="450" y2="262"></line><line x1="510" y1="250" x2="510" y2="262"></line><line x1="570" y1="250" x2="570" y2="262"></line></g>
-      <line x1="360" y1="248" x2="360" y2="264" class="s-hi" stroke-width="2.4"></line>
-      <text x="372" y="242" class="d-xs d-hi" style="opacity:1">next prototype already has it</text>
-      <circle cx="630" cy="256" r="6" class="f-hi"></circle>
-      <text x="644" y="260" class="d-xs">delivered w8</text>
-      <text x="150" y="286" class="d-xs">a prototype in front of users most weeks</text>
-    </svg></div>
-    <figcaption>This is the only comparison that matters. Not which model is modern, but what a change costs you once you have chosen.</figcaption>
-  </figure>
+  <pre class="code"><i># your permanent address, fixed for the whole project</i>
+https://gcst-ai.github.io/gcst/projects/<b>pod-NN</b>/          <i>the project page</i>
+https://gcst-ai.github.io/gcst/projects/<b>pod-NN</b>/demo/     <i>the thing actually running</i></pre>
 
-  <p>Notice that waterfall is not slower at building. It is slower at <span class="mark">changing its mind</span>. If your requirements really were frozen, the top lane would deliver first and cost least. They are not frozen, which is why the top lane loses.</p>
-</section>
-
-<!-- ================= 07 AGENTS ================= -->
-<section class="blk" id="agents">
-  <span class="snum">07 · Part two · Definition</span>
-  <h2>Autocomplete predicts. An agent runs a loop.</h2>
-
-  <p>Everything above was invented before any of you were born and none of it has been repealed. What changed is how fast one person can move through a lap.</p>
-
-  <figure>
-    <div class="figwrap"><svg viewBox="0 0 940 300" role="img" aria-label="Autocomplete is a one-way chain from typing to accepting, while an agent reads the repository, plans, edits, runs the code and feeds the output back into the next plan">
-      <text x="24" y="26" class="d-sm" letter-spacing="2">AUTOCOMPLETE</text>
-      <g class="s-box"><rect x="24" y="86" width="110" height="44"></rect><rect x="170" y="86" width="110" height="44"></rect><rect x="316" y="86" width="110" height="44"></rect></g>
-      <g class="d-xs" text-anchor="middle" style="opacity:.9"><text x="79" y="112">you type</text><text x="225" y="112">it predicts</text><text x="371" y="112">you accept</text></g>
-      <g class="s-line"><line x1="136" y1="108" x2="168" y2="108" marker-end="url(#ar)"></line><line x1="282" y1="108" x2="314" y2="108" marker-end="url(#ar)"></line></g>
-      <text x="24" y="176" class="d-sm">one direction. it never runs</text>
-      <text x="24" y="192" class="d-sm">the code it just wrote.</text>
-
-      <line x1="470" y1="16" x2="470" y2="284" class="s-faint"></line>
-
-      <text x="514" y="26" class="d-sm" letter-spacing="2">AGENT LOOP</text>
-      <g class="s-box"><rect x="514" y="84" width="100" height="42"></rect><rect x="650" y="84" width="100" height="42"></rect><rect x="786" y="84" width="100" height="42"></rect><rect x="650" y="176" width="100" height="42"></rect><rect x="786" y="176" width="100" height="42"></rect></g>
-      <g class="d-xs" text-anchor="middle" style="opacity:.9">
-        <text x="564" y="109">read the repo</text><text x="700" y="109">plan</text><text x="836" y="109">edit files</text>
-        <text x="700" y="201">read output</text><text x="836" y="201">run it</text>
-      </g>
-      <g class="s-line">
-        <line x1="616" y1="105" x2="648" y2="105" marker-end="url(#ar)"></line>
-        <line x1="752" y1="105" x2="784" y2="105" marker-end="url(#ar)"></line>
-        <path d="M836,128 L836,174" marker-end="url(#ar)"></path>
-        <line x1="784" y1="197" x2="752" y2="197" marker-end="url(#ar)"></line>
-      </g>
-      <path d="M648,197 L628,197 L628,105 L648,105" class="s-hi" marker-end="url(#ar-hi)"></path>
-      <text x="514" y="146" class="d-xs d-hi" style="opacity:1">tests fail,</text>
-      <text x="514" y="160" class="d-xs d-hi" style="opacity:1">so the plan changes</text>
-      <line x1="700" y1="220" x2="700" y2="248" class="s-line" marker-end="url(#ar)"></line>
-      <text x="710" y="240" class="d-xs">tests pass</text>
-      <rect x="640" y="250" width="120" height="34" class="s-box"></rect>
-      <text x="700" y="272" class="d-xs" text-anchor="middle" style="opacity:.9">done</text>
-    </svg></div>
-    <figcaption>The marked edge is the entire difference. An agent sees the result of its own work and gets another turn.</figcaption>
-  </figure>
-
-  <p>This matters for your project because the loop is the same loop you saw in the iterative model, only running in minutes instead of weeks. The skill you are actually developing is not prompting. It is <span class="mark">writing a stopping condition</span> clear enough that a loop can tell when it is done, which is the same skill as writing a requirement.</p>
-  <p>Test yourself on that at home. Take the next thing you want to build and write down, in one sentence, how anyone would know it is finished. If you cannot, the agent cannot either, and you will get back something that looks right and is not.</p>
-</section>
-
-<!-- ================= 08 LEVERAGE ================= -->
-<section class="blk" id="leverage">
-  <span class="snum">08 · Honest accounting</span>
-  <h2>It removes typing, not judgment</h2>
-
-  <figure>
-    <div class="figwrap"><svg viewBox="0 0 900 336" role="img" aria-label="Leverage bars per lifecycle phase showing agents help least in requirements and most in implementation and testing">
-      <text x="16" y="20" class="d-sm" letter-spacing="1.6">HOW MUCH AN AGENT ACTUALLY HELPS</text>
-      <g class="d-lbl"><text x="16" y="66">requirements</text><text x="16" y="114">design</text><text x="16" y="162">implementation</text><text x="16" y="210">testing</text><text x="16" y="258">deployment</text><text x="16" y="306">maintenance</text></g>
-      <g class="s-faint" fill="currentColor" stroke="none">
-        <rect x="180" y="54" width="48" height="12"></rect><rect x="232" y="54" width="48" height="12"></rect><rect x="284" y="54" width="48" height="12"></rect><rect x="336" y="54" width="48" height="12"></rect><rect x="388" y="54" width="48" height="12"></rect>
-        <rect x="180" y="102" width="48" height="12"></rect><rect x="232" y="102" width="48" height="12"></rect><rect x="284" y="102" width="48" height="12"></rect><rect x="336" y="102" width="48" height="12"></rect><rect x="388" y="102" width="48" height="12"></rect>
-        <rect x="180" y="150" width="48" height="12"></rect><rect x="232" y="150" width="48" height="12"></rect><rect x="284" y="150" width="48" height="12"></rect><rect x="336" y="150" width="48" height="12"></rect><rect x="388" y="150" width="48" height="12"></rect>
-        <rect x="180" y="198" width="48" height="12"></rect><rect x="232" y="198" width="48" height="12"></rect><rect x="284" y="198" width="48" height="12"></rect><rect x="336" y="198" width="48" height="12"></rect><rect x="388" y="198" width="48" height="12"></rect>
-        <rect x="180" y="246" width="48" height="12"></rect><rect x="232" y="246" width="48" height="12"></rect><rect x="284" y="246" width="48" height="12"></rect><rect x="336" y="246" width="48" height="12"></rect><rect x="388" y="246" width="48" height="12"></rect>
-        <rect x="180" y="294" width="48" height="12"></rect><rect x="232" y="294" width="48" height="12"></rect><rect x="284" y="294" width="48" height="12"></rect><rect x="336" y="294" width="48" height="12"></rect><rect x="388" y="294" width="48" height="12"></rect>
-      </g>
-      <g class="f-hi">
-        <rect x="180" y="54" width="48" height="12"></rect>
-        <rect x="180" y="102" width="48" height="12"></rect><rect x="232" y="102" width="48" height="12"></rect><rect x="284" y="102" width="48" height="12"></rect>
-        <rect x="180" y="150" width="48" height="12"></rect><rect x="232" y="150" width="48" height="12"></rect><rect x="284" y="150" width="48" height="12"></rect><rect x="336" y="150" width="48" height="12"></rect><rect x="388" y="150" width="48" height="12"></rect>
-        <rect x="180" y="198" width="48" height="12"></rect><rect x="232" y="198" width="48" height="12"></rect><rect x="284" y="198" width="48" height="12"></rect><rect x="336" y="198" width="48" height="12"></rect><rect x="388" y="198" width="48" height="12"></rect>
-        <rect x="180" y="246" width="48" height="12"></rect><rect x="232" y="246" width="48" height="12"></rect><rect x="284" y="246" width="48" height="12"></rect><rect x="336" y="246" width="48" height="12"></rect>
-        <rect x="180" y="294" width="48" height="12"></rect><rect x="232" y="294" width="48" height="12"></rect><rect x="284" y="294" width="48" height="12"></rect><rect x="336" y="294" width="48" height="12"></rect>
-      </g>
-      <g class="d-sm"><text x="452" y="64">it will build the wrong thing, fast</text><text x="452" y="112">a good sounding board, it has seen more designs than you</text><text x="452" y="160">this is the easy part now</text><text x="452" y="208">the part you skip. stop skipping it.</text><text x="452" y="256">scripts, config, deploy files</text><text x="452" y="304">reads unfamiliar code better than you do</text></g>
-    </svg></div>
-    <figcaption>Five cells is full leverage. Requirements gets one, and that one cell is the whole argument.</figcaption>
-  </figure>
-
-  <p>Map the tool onto the lifecycle and the picture is lopsided. Agents are strongest exactly where you were already competent and weakest where you were already struggling.</p>
-  <p><strong>The requirements phase just became the phase that matters most.</strong> That is the opposite of what most of you expected. When implementation is cheap, the cost of building the wrong thing goes up, not down, because you will build it faster and further before anyone notices.</p>
-  <p>The 100× multiplier from section 02 does not care that an agent wrote the code.</p>
-</section>
-
-<!-- ================= 09 GIT ================= -->
-<section class="blk" id="git">
-  <span class="snum">09 · The tool</span>
-  <h2>Four places your code lives</h2>
-
-  <figure>
-    <div class="figwrap"><svg viewBox="0 0 940 234" role="img" aria-label="Code moves from the working directory to the staging area to the local repository and across the network boundary to GitHub, using add, commit, push, pull and clone">
-      <g class="s-box"><rect x="24" y="70" width="170" height="54"></rect><rect x="234" y="70" width="170" height="54"></rect><rect x="444" y="70" width="170" height="54"></rect><rect x="700" y="70" width="170" height="54"></rect></g>
-      <g class="d-lbl" text-anchor="middle"><text x="109" y="94">working dir</text><text x="319" y="94">staging area</text><text x="529" y="94">local repo</text><text x="785" y="94">GitHub</text></g>
-      <g class="d-xs" text-anchor="middle"><text x="109" y="112">the files you edit</text><text x="319" y="112">the next commit</text><text x="529" y="112">your full history</text><text x="785" y="112">the shared copy</text></g>
-      <line x1="658" y1="20" x2="658" y2="200" class="s-hi-d"></line>
-      <text x="648" y="34" class="d-sm d-hi" text-anchor="end" style="opacity:1">your laptop</text>
-      <text x="668" y="34" class="d-sm d-hi" style="opacity:1">the internet</text>
-      <g class="s-line">
-        <line x1="196" y1="97" x2="232" y2="97" marker-end="url(#ar)"></line>
-        <line x1="406" y1="97" x2="442" y2="97" marker-end="url(#ar)"></line>
-        <line x1="616" y1="97" x2="698" y2="97" marker-end="url(#ar)"></line>
-        <path d="M700,140 L444,140" marker-end="url(#ar)"></path>
-        <path d="M785,126 L785,192 L109,192 L109,126" marker-end="url(#ar)"></path>
-      </g>
-      <g class="d-sm" text-anchor="middle" style="opacity:.95"><text x="214" y="90">git add</text><text x="424" y="90">git commit</text><text x="657" y="88">git push</text><text x="572" y="134">git pull</text><text x="447" y="206">git clone</text></g>
-    </svg></div>
-    <figcaption>Git is the tool that tracks every version. GitHub is the place that holds the shared copy. The dashed line is why push exists.</figcaption>
-  </figure>
-
-  <p>A commit is a labelled snapshot of the whole project that you can return to. That is the actual promise here. It means you can break things confidently, which is the only way anyone learns to build anything.</p>
-
-  <pre class="code"><b>git clone</b> <i>&lt;url&gt;</i>   <i># copy the shared repo onto your laptop</i>
-<b>git add</b> index.html   <i># choose what goes in the next snapshot</i>
-<b>git commit</b> -m <i>"add project section"</i>   <i># take the snapshot</i>
-<b>git push</b>   <i># send your snapshots to GitHub</i>
-<b>git pull</b>   <i># get everyone else's</i></pre>
-
-  <div class="callout">
-    <span class="k">You do not need any of this to do the homework</span>
-    <p style="margin:0">Learn the five commands, they are the professional path and you will need them. But the class site can be edited entirely in your browser, with no install, and that is what the next section walks you through. Do the browser version tonight. Learn the commands this month.</p>
+  <div class="cards">
+    <div class="card"><span class="k">In your pod, this week</span><p>Check that both addresses load and neither still says “Pod NN”. If the placeholder text is there, you have published a template rather than deployed a project. Changing it takes two minutes.</p></div>
+    <div class="card"><span class="k">Run a beta</span><p>Send the demo link to five people outside your pod before you show it in class. That is exactly the limited release IBM describes, and it costs you one message.</p></div>
+    <div class="card"><span class="k">How it fails</span><p>Everything works locally and nobody opens the real URL. Then demo day becomes your first deployment, in front of an audience, which is the worst possible moment to find a broken image path.</p></div>
   </div>
 </section>
 
-<!-- ================= 10 DO IT ================= -->
-<section class="blk" id="do">
-  <span class="snum">10 · Do this now · 30 minutes</span>
-  <h2>Ship v0.1 into the class site</h2>
+<!-- ================= PHASE 7 ================= -->
+<section class="blk" id="p7">
+  <span class="snum">09 · Phase 07</span>
+  <div class="ph"><span class="no">07</span><h2 style="margin:0">Maintenance</h2></div>
 
-  <p>Your project has a permanent address. It is <code>https://gcst-ai.github.io/gcst/projects/pod-X/</code>, where X is your pod number. That address never changes, and tonight you are going to make it say something true.</p>
+  <p>The cycle does not end at deployment. Maintenance is the work after it. Updates, optimisations, unanticipated changes, patches, new use cases, and the bugs your users find that you never would have. IBM's image is a house. Over time small pieces get misused or break down, and they get replaced and hopefully improved.</p>
+
+  <p>In DevOps teams, maintenance stops being a phase at all. With continuous integration and continuous delivery, code is added, tested and deployed continuously, and maintenance becomes “an ongoing activity rather than a distinct phase”. Your setup already works this way whether you noticed or not. Every commit is a deployment, so you have been maintaining since your first one.</p>
+
+  <div class="deliv">
+    <span>Deliverable</span>
+    The project still works next month, and the known problems are written down somewhere findable.
+  </div>
+
+  <div class="cards">
+    <div class="card"><span class="k">In your pod, this week</span><p>Start a <b>Known problems</b> list, in your notes or as GitHub issues. Every bug you find and do not fix today goes on it. A bug nobody wrote down is a bug you rediscover in November.</p></div>
+    <div class="card"><span class="k">The arrow back to planning</span><p>What users do with v0.1 becomes the input to your next plan. That loop is what makes this a cycle rather than a queue. If nothing you learned changed the plan, either nobody used it or nobody asked them.</p></div>
+    <div class="card"><span class="k">How it fails</span><p>The project is declared finished on demo day and quietly rots. Six months later a link on your CV opens a broken page. Keep it alive and that same link becomes the strongest thing on there.</p></div>
+  </div>
 
   <figure>
-    <div class="figwrap"><svg viewBox="0 0 900 200" role="img" aria-label="Editing in the browser on github dot com, committing, waiting two minutes for the build, and the page appearing live at your pod address">
-      <g class="s-box"><rect x="20" y="66" width="180" height="56"></rect><rect x="260" y="66" width="180" height="56"></rect><rect x="500" y="66" width="150" height="56"></rect><rect x="710" y="66" width="170" height="56"></rect></g>
-      <g class="d-lbl" text-anchor="middle"><text x="110" y="90">edit in browser</text><text x="350" y="90">commit changes</text><text x="575" y="90">wait 2 min</text><text x="795" y="90">it is live</text></g>
+    <div class="figwrap"><svg viewBox="0 0 960 220" role="img" aria-label="Seven phases in a row from planning to maintenance, with a marked arrow running back from maintenance to planning">
+      <g class="s-box">
+        <rect x="14" y="60" width="118" height="48"></rect><rect x="150" y="60" width="118" height="48"></rect>
+        <rect x="286" y="60" width="118" height="48"></rect><rect x="422" y="60" width="118" height="48"></rect>
+        <rect x="558" y="60" width="118" height="48"></rect><rect x="694" y="60" width="118" height="48"></rect>
+        <rect x="830" y="60" width="118" height="48"></rect>
+      </g>
+      <g class="d-sm d-hi" text-anchor="middle" style="opacity:1">
+        <text x="73" y="52">01</text><text x="209" y="52">02</text><text x="345" y="52">03</text><text x="481" y="52">04</text>
+        <text x="617" y="52">05</text><text x="753" y="52">06</text><text x="889" y="52">07</text>
+      </g>
+      <g class="d-lbl" text-anchor="middle">
+        <text x="73" y="90">planning</text><text x="209" y="90">analysis</text><text x="345" y="90">design</text><text x="481" y="90">coding</text>
+        <text x="617" y="90">testing</text><text x="753" y="90">deployment</text><text x="889" y="90">maintenance</text>
+      </g>
+      <g class="s-line">
+        <line x1="134" y1="84" x2="148" y2="84" marker-end="url(#ar)"></line><line x1="270" y1="84" x2="284" y2="84" marker-end="url(#ar)"></line>
+        <line x1="406" y1="84" x2="420" y2="84" marker-end="url(#ar)"></line><line x1="542" y1="84" x2="556" y2="84" marker-end="url(#ar)"></line>
+        <line x1="678" y1="84" x2="692" y2="84" marker-end="url(#ar)"></line><line x1="814" y1="84" x2="828" y2="84" marker-end="url(#ar)"></line>
+      </g>
+      <path d="M889,110 L889,164 L73,164 L73,112" class="s-hi" marker-end="url(#ar-hi)"></path>
+      <text x="481" y="184" class="d-sm d-hi" text-anchor="middle" style="opacity:1">what real users did with it becomes the input to the next plan</text>
+      <text x="481" y="204" class="d-xs" text-anchor="middle">without this arrow it is a schedule, not a life cycle</text>
+    </svg></div>
+    <figcaption>The seven phases as IBM and Microsoft both list them. The marked arrow is the only part that makes the word <em>cycle</em> honest.</figcaption>
+  </figure>
+</section>
+
+<!-- ================= 10 REPO ================= -->
+<section class="blk" id="repo">
+  <span class="snum">10 · The practical bit</span>
+  <h2>Your pod folder is already the life cycle</h2>
+
+  <p>You were given a folder with six things in it, and that list is not arbitrary. Each one is the resting place of a phase. Nobody told you in week one because it would have meant nothing then. It should mean something now.</p>
+
+  <pre class="code">projects/<b>pod-NN</b>/
+  <b>index.html</b>      <i>planning + analysis, written for a reader</i>
+  <b>style.css</b>       <i>design, the visual half</i>
+  <b>images/</b>         <i>design, the sketches and the cover</i>
+  <b>src/</b>            <i>coding</i>
+  <b>test/</b>           <i>testing</i>
+  <b>demo/</b>           <i>coding + deployment, the thing actually running</i></pre>
+
+  <figure>
+    <div class="figwrap"><svg viewBox="0 0 920 400" role="img" aria-label="A three column table mapping each of the seven phases to its deliverable and to the file or folder in a pod project where that deliverable lives">
+      <g class="d-sm" text-anchor="middle" style="opacity:.9">
+        <text x="95" y="28">phase</text><text x="363" y="28">what it produces</text><text x="726" y="28">where it lives in your folder</text>
+      </g>
+      <line x1="14" y1="38" x2="906" y2="38" class="s-faint"></line>
+
+      <g class="s-box">
+        <rect x="14" y="50" width="162" height="34"></rect><rect x="14" y="98" width="162" height="34"></rect>
+        <rect x="14" y="146" width="162" height="34"></rect><rect x="14" y="194" width="162" height="34"></rect>
+        <rect x="14" y="242" width="162" height="34"></rect><rect x="14" y="290" width="162" height="34"></rect>
+        <rect x="14" y="338" width="162" height="34"></rect>
+      </g>
+      <g class="d-lbl" text-anchor="middle">
+        <text x="95" y="72">planning</text><text x="95" y="120">analysis</text><text x="95" y="168">design</text><text x="95" y="216">coding</text>
+        <text x="95" y="264">testing</text><text x="95" y="312">deployment</text><text x="95" y="360">maintenance</text>
+      </g>
+
+      <g class="s-line">
+        <line x1="180" y1="67" x2="204" y2="67" marker-end="url(#ar)"></line><line x1="180" y1="115" x2="204" y2="115" marker-end="url(#ar)"></line>
+        <line x1="180" y1="163" x2="204" y2="163" marker-end="url(#ar)"></line><line x1="180" y1="211" x2="204" y2="211" marker-end="url(#ar)"></line>
+        <line x1="180" y1="259" x2="204" y2="259" marker-end="url(#ar)"></line><line x1="180" y1="307" x2="204" y2="307" marker-end="url(#ar)"></line>
+        <line x1="180" y1="355" x2="204" y2="355" marker-end="url(#ar)"></line>
+      </g>
+
+      <g class="d-sm">
+        <text x="210" y="72">scope, and what you will not build</text>
+        <text x="210" y="120">what real users actually asked for</text>
+        <text x="210" y="168">screens, file layout, owners</text>
+        <text x="210" y="216">working code</text>
+        <text x="210" y="264">what broke, and what you fixed</text>
+        <text x="210" y="312">an address a stranger can open</text>
+        <text x="210" y="360">it still works next month</text>
+      </g>
+
+      <g class="s-line">
+        <line x1="516" y1="67" x2="540" y2="67" marker-end="url(#ar)"></line><line x1="516" y1="115" x2="540" y2="115" marker-end="url(#ar)"></line>
+        <line x1="516" y1="163" x2="540" y2="163" marker-end="url(#ar)"></line><line x1="516" y1="211" x2="540" y2="211" marker-end="url(#ar)"></line>
+        <line x1="516" y1="259" x2="540" y2="259" marker-end="url(#ar)"></line><line x1="516" y1="307" x2="540" y2="307" marker-end="url(#ar)"></line>
+        <line x1="516" y1="355" x2="540" y2="355" marker-end="url(#ar)"></line>
+      </g>
+
+      <g class="s-box">
+        <rect x="546" y="50" width="360" height="34"></rect><rect x="546" y="98" width="360" height="34"></rect>
+        <rect x="546" y="146" width="360" height="34"></rect><rect x="546" y="194" width="360" height="34"></rect>
+        <rect x="546" y="242" width="360" height="34"></rect><rect x="546" y="290" width="360" height="34"></rect>
+        <rect x="546" y="338" width="360" height="34"></rect>
+      </g>
+      <g class="d-sm d-hi" style="opacity:1">
+        <text x="562" y="72">the summary line in index.html</text>
+        <text x="562" y="120">the "Why we built it" section</text>
+        <text x="562" y="168">images/ and "How it works"</text>
+        <text x="562" y="216">src/ and demo/index.html</text>
+        <text x="562" y="264">test/</text>
+        <text x="562" y="312">the commit, then your pod URL</text>
+        <text x="562" y="360">the commit history and issues</text>
+      </g>
+    </svg></div>
+    <figcaption>Nothing here needs installing or creating. All of it already exists in your folder. Five of the seven are currently empty or still say “Pod NN”, which is the most fixable problem you will meet all semester.</figcaption>
+  </figure>
+
+  <p>This is the practical claim of the whole page. <span class="mark">You do not adopt the SDLC. You are already running it, in an order nobody chose.</span> All you have to add is noticing which phase you are in, and leaving the deliverable somewhere the rest of your pod can find it. That is a small change in habit with a large effect on what you finish.</p>
+
+  <div class="callout">
+    <span class="k">A rule that will save you an argument</span>
+    <p style="margin:0">If a piece of work is not in the repository, it does not exist. Not a screenshot in the group chat, not a decision somebody remembers, not a design in one person's notebook. The repository is the only shared memory your pod has, and the only one that survives a lost phone.</p>
+  </div>
+</section>
+
+<!-- ================= 11 MODELS ================= -->
+<section class="blk" id="models">
+  <span class="snum">11 · Models</span>
+  <h2>The models: same phases, different order</h2>
+
+  <p>Every model on this list runs all seven phases. They differ on the order, how many times each runs, and how much has to be finished before the next one starts. IBM lists eight in common use. You do not need to memorise them, you need to recognise them.</p>
+
+  <div class="figwrap">
+  <table class="tbl">
+    <thead><tr><th>Model</th><th>How it runs the phases</th><th>Use it when</th></tr></thead>
+    <tbody>
+      <tr><td><b>Waterfall</b></td><td>Each phase finished before the next starts, once.</td><td>Requirements are stable and stakeholders only want to appear at major milestones.</td></tr>
+      <tr><td><b>V-model</b></td><td>Waterfall, with a matching test phase for every build phase.</td><td>Stable requirements plus a real need for heavy verification.</td></tr>
+      <tr><td><b>Agile</b></td><td>Short sprints, each producing a small released change.</td><td>Clients can and will join frequent reviews. Requirements will move.</td></tr>
+      <tr><td><b>Lean</b></td><td>Agile, tuned to remove waste and delay decisions until the data is in.</td><td>You have too much process and not enough output.</td></tr>
+      <tr><td><b>Iterative</b></td><td>Build a minimum viable product fast, then improve it in successive versions.</td><td>You know roughly what to build but not exactly how it should behave.</td></tr>
+      <tr><td><b>Spiral</b></td><td>Objectives, risk analysis, build and test, plan the next loop. Repeat.</td><td>High risk or high complexity, where frequent correction is expected.</td></tr>
+      <tr><td><b>Big bang</b></td><td>Start coding. No planning, no requirements analysis.</td><td>Tiny, self-explanatory projects. High risk everywhere else.</td></tr>
+      <tr><td><b>RAD</b></td><td>Fast prototypes shown to users instead of a long planning period.</td><td>You have users available regularly and need to adapt to them quickly.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <p style="margin-top:1.4rem">Microsoft narrows the same field to four worth comparing and adds one the list above leaves out, <strong>DevOps</strong>, where development and operations merge and every phase becomes continuous. IBM's framing is precise. DevOps “addresses the rigidity of the SDLC by making each phase of the software development process continuous throughout the project”, so planning, coding, testing, deploying, maintaining and monitoring all run at once rather than in turn.</p>
+
+  <figure class="shot" style="max-width:34rem">
+    <img src="img/agile_sdlc.png" alt="A semicircular arc split into six numbered segments labelled concept, inception, iteration, release, maintenance and retirement, with Agile SDLC written in the centre">
+    <figcaption>The agile version of the cycle, drawn with its own vocabulary. Concept and inception are planning and analysis. Iteration is design, coding and testing collapsed into one repeating lap. Note the phase the seven-phase diagrams leave out, <strong>retirement</strong>.</figcaption>
+  </figure>
+
+  <p>Retirement is worth ten seconds of your attention. Software ends. Somebody decides to switch it off, move the users, and archive the data. Your project will reach that point too, and “the pod graduated” is not a plan for it.</p>
+
+  <p>IBM's guidance on choosing comes down to three questions, and you can answer all three today. <em>Are the requirements clearly defined or likely to change? How complex is the project? How experienced is the team?</em></p>
+</section>
+
+<!-- ================= 12 PICK ================= -->
+<section class="blk" id="pick">
+  <span class="snum">12 · Your project</span>
+  <h2>What your pod should actually run</h2>
+
+  <p>Answer IBM's three questions honestly. Requirements, not defined, and certain to change once you talk to a real user. Complexity, moderate. Team experience, this is your first project. None of that is a weakness. It just narrows the choice, which is what a good question does.</p>
+
+  <p>That combination rules out waterfall and the V-model, because both bet on requirements you do not have. It rules out big bang, because five people coding with no plan produce five incompatible halves. Spiral is overkill for a project where nothing catches fire when it breaks. What is left is <span class="mark">iterative, with the discipline of agile</span>. A short lap, ending in a deployment, every time.</p>
+
+  <figure>
+    <div class="figwrap"><svg viewBox="0 0 900 260" role="img" aria-label="A two week lap shown as seven days of activity ending in a deployment, with the loop returning to the start">
+      <text x="14" y="30" class="d-sm">one lap · two weeks · all seven phases, small</text>
+      <line x1="14" y1="150" x2="886" y2="150" class="s-line"></line>
+      <g class="s-line">
+        <line x1="70" y1="144" x2="70" y2="156"></line><line x1="206" y1="144" x2="206" y2="156"></line>
+        <line x1="342" y1="144" x2="342" y2="156"></line><line x1="478" y1="144" x2="478" y2="156"></line>
+        <line x1="614" y1="144" x2="614" y2="156"></line><line x1="750" y1="144" x2="750" y2="156"></line>
+        <line x1="850" y1="144" x2="850" y2="156"></line>
+      </g>
       <g class="d-xs" text-anchor="middle">
-        <text x="110" y="110">pencil icon, github.com</text><text x="350" y="110">the green button</text>
-        <text x="575" y="110">the site rebuilds</text><text x="795" y="110">your pod address</text>
+        <text x="70" y="172">mon w1</text><text x="206" y="172">wed w1</text><text x="342" y="172">fri w1</text>
+        <text x="478" y="172">mon w2</text><text x="614" y="172">wed w2</text><text x="750" y="172">thu w2</text><text x="850" y="172">fri w2</text>
       </g>
-      <g class="s-line">
-        <line x1="202" y1="94" x2="258" y2="94" marker-end="url(#ar)"></line>
-        <line x1="442" y1="94" x2="498" y2="94" marker-end="url(#ar)"></line>
-        <line x1="652" y1="94" x2="708" y2="94" marker-end="url(#ar)"></line>
+      <g class="d-sm" text-anchor="middle">
+        <text x="70" y="120">agree scope</text><text x="206" y="120">talk to a user</text><text x="342" y="120">sketch + assign</text>
+        <text x="478" y="120">build</text><text x="614" y="120">build</text><text x="750" y="120">test</text>
       </g>
-      <path d="M795,124 L795,164 L110,164 L110,126" class="s-hi" marker-end="url(#ar-hi)"></path>
-      <text x="452" y="182" class="d-sm d-hi" text-anchor="middle" style="opacity:1">look at it, then go round again. that is a lap.</text>
-      <text x="20" y="40" class="d-sm">the whole loop, no install, about four minutes</text>
+      <g class="d-xs" text-anchor="middle" style="opacity:.55">
+        <text x="70" y="104">planning</text><text x="206" y="104">analysis</text><text x="342" y="104">design</text>
+        <text x="478" y="104">coding</text><text x="614" y="104">coding</text><text x="750" y="104">testing</text>
+      </g>
+      <circle cx="850" cy="150" r="7" class="f-hi"></circle>
+      <text x="850" y="120" class="d-sm d-hi" text-anchor="middle" style="opacity:1">deploy</text>
+      <text x="850" y="104" class="d-xs d-hi" text-anchor="middle" style="opacity:1">v0.2 live</text>
+      <path d="M850,164 L850,214 L70,214 L70,158" class="s-hi" marker-end="url(#ar-hi)"></path>
+      <text x="460" y="234" class="d-sm d-hi" text-anchor="middle" style="opacity:1">a lap that ships nothing was not a lap</text>
     </svg></div>
-    <figcaption>Every commit here is a real deployment. That is why v0.1 can exist tonight.</figcaption>
-  </figure>
-
-  <h3 style="margin-top:2.4rem">The steps</h3>
-  <ol class="ol">
-    <li>Open <a href="https://github.com/GCST-AI/gcst">github.com/GCST-AI/gcst</a> and sign in. Read the existing <code>index.html</code> before you change anything.</li>
-    <li>Go into <code>projects/</code> and open your pod folder, for example <code>pod-07</code>.</li>
-    <li>Click <code>index.html</code>, then the <strong>pencil icon</strong> at the top right.</li>
-    <li>Change the words between the tags. <code>&lt;h1&gt;Pod 7&lt;/h1&gt;</code> becomes <code>&lt;h1&gt;Crop Disease Scanner&lt;/h1&gt;</code>. Change the words, keep the tags.</li>
-    <li>Click the green <strong>Commit changes</strong> button, then <strong>Commit changes</strong> again.</li>
-    <li>Wait two minutes, open your pod address, and refresh. That is a deployment.</li>
-    <li>Now do the same to the front page: find your pod's card in the top-level <code>index.html</code> and put your real project name and one sentence in it.</li>
-  </ol>
-
-  <div class="callout">
-    <span class="k">What v0.1 means</span>
-    <p style="margin:0">Not finished. <strong>Loading.</strong> A page that opens, says what your project is called, and says in one sentence what it does. If you are tempted to wait until it looks good, reread section 04 and the honest answer you wrote there.</p>
-  </div>
-
-  <h3 style="margin-top:2.4rem">Before you close the laptop</h3>
-  <ul class="check" id="check">
-    <li><input type="checkbox" id="c1"><label for="c1">My pod page loads at its address and shows my real project name</label></li>
-    <li><input type="checkbox" id="c2"><label for="c2">There is one sentence on it saying what the project does</label></li>
-    <li><input type="checkbox" id="c3"><label for="c3">My card on the front page says the same thing</label></li>
-    <li><input type="checkbox" id="c4"><label for="c4">I sent the link to one person who is not on my pod</label></li>
-    <li><input type="checkbox" id="c5"><label for="c5">I wrote down the one part of my project I will build carefully, and the parts I will build badly</label></li>
-  </ul>
-  <p style="margin-top:1rem; font-size:.9em; color:var(--ink3)">These tick boxes save in your browser. They are for you, nobody sees them.</p>
-</section>
-
-<!-- ================= 11 HOMEWORK ================= -->
-<section class="blk" id="homework">
-  <span class="snum">11 · Homework</span>
-  <h2>Two things before we meet again</h2>
-
-  <figure>
-    <div class="figwrap"><svg viewBox="0 0 900 154" role="img" aria-label="Timeline from today Wednesday to Friday when version 0.1 is due and Sunday when the Google course module is due">
-      <line x1="40" y1="82" x2="860" y2="82" class="s-line"></line>
-      <g class="s-line"><line x1="40" y1="76" x2="40" y2="88"></line><line x1="177" y1="76" x2="177" y2="88"></line><line x1="314" y1="76" x2="314" y2="88"></line><line x1="451" y1="76" x2="451" y2="88"></line><line x1="588" y1="76" x2="588" y2="88"></line><line x1="725" y1="76" x2="725" y2="88"></line><line x1="860" y1="76" x2="860" y2="88"></line></g>
-      <g class="d-xs" text-anchor="middle"><text x="40" y="104">wed</text><text x="177" y="104">thu</text><text x="314" y="104">fri</text><text x="451" y="104">sat</text><text x="588" y="104">sun</text><text x="725" y="104">mon</text><text x="860" y="104">tue</text></g>
-      <text x="40" y="62" class="d-sm">today</text>
-      <circle cx="314" cy="82" r="7" class="f-hi"></circle>
-      <circle cx="588" cy="82" r="7" class="f-hi"></circle>
-      <text x="314" y="60" class="d-sm d-hi" text-anchor="middle" style="opacity:1">v0.1 live on the class site</text>
-      <text x="588" y="60" class="d-sm d-hi" text-anchor="middle" style="opacity:1">module 1 of the Google path</text>
-      <text x="40" y="140" class="d-xs">v0.1, not v1.0. one lap. something that loads.</text>
-    </svg></div>
+    <figcaption>Two weeks, all seven phases, ending in a live URL. Everything on this page fits into that shape, and the shape repeats until November.</figcaption>
   </figure>
 
   <div class="cards">
-    <div class="card"><span class="k">01 · Friday</span><p><b>Ship v0.1.</b> Your pod page live, naming your project and saying what it does. Not finished. Loading.</p></div>
-    <div class="card"><span class="k">02 · Sunday</span><p><b>Start the Google path.</b> <a href="https://www.skills.google/paths/236/course_templates/885">skills.google/paths/236</a>. Finish module 1 and bring one thing that surprised you.</p></div>
-    <div class="card"><span class="k">03 · Ongoing</span><p><b>Commit every day you write code.</b> Even a broken commit. The habit is worth more than any single commit in it.</p></div>
+    <div class="card"><span class="k">Fixed</span><p>The lap length. Two weeks, every time. If the work does not fit, cut the work. Never extend the lap.</p></div>
+    <div class="card"><span class="k">Fixed</span><p>The lap ends in a deployment. Something at your pod URL is different from two weeks ago, and a stranger can see it.</p></div>
+    <div class="card"><span class="k">Variable</span><p>Everything else. Which features, who does what, how polished. This is the part you are allowed to get wrong, because the next lap is only two weeks away.</p></div>
   </div>
 </section>
 
-<!-- ================= 12 RECAP ================= -->
-<section class="blk" id="recap">
-  <span class="snum">12 · Close</span>
-  <h2>Which one does your project actually need?</h2>
+<!-- ================= 13 AI ================= -->
+<section class="blk" id="ai">
+  <span class="snum">13 · AI</span>
+  <h2>Where AI sits in the cycle</h2>
+
+  <p>The IEEE reports that <span class="mark">35% of organisations</span> use AI to aid or accelerate software development, and it is not confined to coding. IBM's examples run across the whole cycle. Identifying requirements in planning, finding trends in user feedback and flagging compliance issues in analysis, drafting first-pass code from a functional design, generating test cases and analysing patterns in test failures.</p>
+
+  <p>“Vibe coding” gets named directly and described accurately. Developers describe what they want in plain text, the tool produces the code, and “developers often take this code as a starting point and refine it further”. Starting point. Not output. The difference between those two words is most of your grade.</p>
+
+  <p>Then IBM names the cost. This is the part worth memorising, because it is your semester it is describing.</p>
+
+  <blockquote class="q">
+    “AI tools might make mistakes and write unoptimized code. If developers do not carefully review all code generated by AI tools, these tools can introduce costly software bugs that are not discovered until much later in the lifecycle.”
+    <cite>IBM · AI in the SDLC</cite>
+  </blockquote>
+
+  <p style="margin-top:1.4rem">Look at where that lands on the cycle. A bug introduced in phase four and found in phase seven has passed through testing and deployment and had more code built on top of it. This is exactly what the life cycle exists to prevent, and an unreviewed AI suggestion walks you into it at speed.</p>
+
+  <p>The second cost is subtler. Writing gets faster, so review and validation become the bottleneck, and IBM notes this “can potentially reverse those time savings”. You do not get to keep the speed and skip the reading. Used well, these tools are a genuine advantage. Used as a substitute for understanding, they quietly take the learning away.</p>
+
+  <div class="cards">
+    <div class="card"><span class="k">The rule</span><p><b>Do not commit code you cannot explain.</b> If a teammate points at a line and asks what it does, and the honest answer is “the model wrote it”, it does not go in. Ask the tool to explain it, then it can.</p></div>
+    <div class="card"><span class="k">Where it genuinely helps you</span><p>The phases you are weakest at. Turning three messy user conversations into a requirements list. Generating a test walkthrough. Explaining an error message you have never seen. All analysis and testing rather than coding.</p></div>
+    <div class="card"><span class="k">Where it will hurt you</span><p>Four hundred lines of demo code in an afternoon that nobody on the pod understands. It looks like progress in week three and becomes a wall you cannot climb in week nine.</p></div>
+  </div>
+</section>
+
+<!-- ================= 14 SECURITY ================= -->
+<section class="blk" id="sec">
+  <span class="snum">14 · Security</span>
+  <h2>Security is not a phase</h2>
+
+  <p>The old arrangement treated security as a stage near the end, somewhere inside testing. DevSecOps, or “secure DevOps”, moves it into every phase instead. IBM says it “incorporates security considerations into every phase of the SDLC”, threading code reviews and penetration testing throughout, so risk is handled early rather than discovered late enough to delay a release.</p>
+
+  <p>Microsoft describes the same spread phase by phase. Security goals set in planning, threats assessed in analysis, protocols embedded in design, secure coding standards in development, security tests in testing, secure configuration at deployment, continuous monitoring in maintenance.</p>
 
   <figure>
-    <div class="figwrap"><svg viewBox="0 0 940 306" role="img" aria-label="A decision chart. If a wrong choice cannot be undone cheaply, plan up front. If it can, and a real user sees it weekly, use RAD, otherwise use iterative">
-      <rect x="20" y="122" width="112" height="46" class="s-box"></rect>
-      <text x="76" y="150" class="d-lbl" text-anchor="middle">your project</text>
-      <line x1="134" y1="145" x2="174" y2="145" class="s-line" marker-end="url(#ar)"></line>
-      <polygon points="290,87 402,145 290,203 178,145" class="s-box"></polygon>
-      <text x="290" y="140" class="d-xs" text-anchor="middle" style="opacity:.9">can a wrong choice</text>
-      <text x="290" y="156" class="d-xs" text-anchor="middle" style="opacity:.9">be undone cheaply?</text>
-      <line x1="290" y1="203" x2="290" y2="246" class="s-line" marker-end="url(#ar)"></line>
-      <text x="298" y="228" class="d-xs">no</text>
-      <rect x="200" y="248" width="180" height="46" class="s-box"></rect>
-      <text x="290" y="268" class="d-lbl" text-anchor="middle">waterfall</text>
-      <text x="290" y="284" class="d-xs" text-anchor="middle" style="opacity:.8">plan more up front</text>
-      <line x1="402" y1="145" x2="448" y2="145" class="s-line" marker-end="url(#ar)"></line>
-      <text x="410" y="136" class="d-xs">yes</text>
-      <polygon points="564,87 676,145 564,203 452,145" class="s-box"></polygon>
-      <text x="564" y="140" class="d-xs" text-anchor="middle" style="opacity:.9">a real user, in front</text>
-      <text x="564" y="156" class="d-xs" text-anchor="middle" style="opacity:.9">of it every week?</text>
-      <path d="M564,87 L564,58 L694,58" class="s-line" marker-end="url(#ar)"></path>
-      <text x="572" y="76" class="d-xs">yes</text>
-      <rect x="700" y="36" width="200" height="46" class="s-box"></rect>
-      <text x="800" y="56" class="d-lbl" text-anchor="middle">RAD</text>
-      <text x="800" y="72" class="d-xs" text-anchor="middle" style="opacity:.8">prototype and show</text>
-      <path d="M564,203 L564,240 L694,240" class="s-hi" marker-end="url(#ar-hi)"></path>
-      <text x="572" y="228" class="d-xs d-hi" style="opacity:1">no</text>
-      <rect x="700" y="218" width="200" height="46" class="s-hi"></rect>
-      <text x="800" y="238" class="d-lbl d-hi" text-anchor="middle">iterative</text>
-      <text x="800" y="254" class="d-xs d-hi" text-anchor="middle" style="opacity:1">ship every lap</text>
+    <div class="figwrap"><svg viewBox="0 0 900 250" role="img" aria-label="Two rows comparing security as a single block inside the testing phase against security running underneath all seven phases">
+      <text x="14" y="26" class="d-sm">the old way</text>
+      <g class="s-box">
+        <rect x="14" y="38" width="112" height="30"></rect><rect x="138" y="38" width="112" height="30"></rect>
+        <rect x="262" y="38" width="112" height="30"></rect><rect x="386" y="38" width="112" height="30"></rect>
+        <rect x="510" y="38" width="112" height="30"></rect><rect x="634" y="38" width="112" height="30"></rect>
+        <rect x="758" y="38" width="112" height="30"></rect>
+      </g>
+      <g class="d-xs" text-anchor="middle">
+        <text x="70" y="58">planning</text><text x="194" y="58">analysis</text><text x="318" y="58">design</text><text x="442" y="58">coding</text>
+        <text x="566" y="58">testing</text><text x="690" y="58">deployment</text><text x="814" y="58">maintenance</text>
+      </g>
+      <rect x="510" y="76" width="112" height="24" fill="url(#hatch)" stroke="var(--accent)" stroke-width="1.2"></rect>
+      <text x="566" y="116" class="d-xs d-hi" text-anchor="middle" style="opacity:1">security</text>
+      <text x="640" y="93" class="d-xs">one block, found too late to be cheap</text>
+
+      <line x1="14" y1="140" x2="886" y2="140" class="s-faint"></line>
+
+      <text x="14" y="170" class="d-sm">DevSecOps</text>
+      <g class="s-box">
+        <rect x="14" y="182" width="112" height="30"></rect><rect x="138" y="182" width="112" height="30"></rect>
+        <rect x="262" y="182" width="112" height="30"></rect><rect x="386" y="182" width="112" height="30"></rect>
+        <rect x="510" y="182" width="112" height="30"></rect><rect x="634" y="182" width="112" height="30"></rect>
+        <rect x="758" y="182" width="112" height="30"></rect>
+      </g>
+      <g class="d-xs" text-anchor="middle">
+        <text x="70" y="202">planning</text><text x="194" y="202">analysis</text><text x="318" y="202">design</text><text x="442" y="202">coding</text>
+        <text x="566" y="202">testing</text><text x="690" y="202">deployment</text><text x="814" y="202">maintenance</text>
+      </g>
+      <rect x="14" y="220" width="856" height="18" fill="url(#hatch)" stroke="var(--accent)" stroke-width="1.2"></rect>
+      <text x="442" y="233" class="d-xs d-hi" text-anchor="middle" style="opacity:1">security, in every phase</text>
     </svg></div>
-    <figcaption>For almost every project in this room, the answer is the marked one.</figcaption>
+    <figcaption>Same total effort, spread differently. The cost of a security fix rises through the cycle exactly like any other defect.</figcaption>
   </figure>
 
+  <div class="callout">
+    <span class="k">This one applies to you today</span>
+    <p style="margin:0">Your repository is <strong>public</strong>. Everything you commit is readable by anyone, forever, including after you delete it, because the history keeps it. Never commit an API key, a password, a token, or personal data about someone you interviewed. If you have already committed one, tell a maintainer today and treat that key as compromised. Nobody will be annoyed with you for reporting it. This is the most likely security incident in this class, and one decision made now prevents all of it. No secret goes in the repo.</p>
+  </div>
+
+  <p style="margin-top:1.6rem">One more from IBM, because it explains why maintenance is a security phase and not only a bug-fixing one. Supply chain attacks are rising, and a common route is hijacking the update process to ship malware instead of an update. In 2020 the vendor SolarWinds was breached and malicious code went out to its customers disguised as a legitimate update, reaching US government departments. Your update mechanism is a delivery pipeline into every user you have, which is exactly what makes it worth attacking.</p>
+</section>
+
+<!-- ================= 15 FAILURES ================= -->
+<section class="blk" id="fail">
+  <span class="snum">15 · Failure modes</span>
+  <h2>Four ways this goes wrong</h2>
+
+  <p>IBM names four challenges that endanger SDLC projects. All four have a student-sized version, and you will meet at least two before November. Knowing their names in advance is most of the defence.</p>
+
+  <div class="cards">
+    <div class="card"><span class="k">01 · Scope creep</span><p>Requirements expand past the plan, effort goes with them, and the additions “do not serve the core purpose of the software”. Your version is every idea from the group chat becoming a feature while the original one never gets finished.</p></div>
+    <div class="card"><span class="k">02 · Poorly defined requirements</span><p>Without real analysis, teams “go through many wasted work cycles before discovering the software's actual needs”. Your version is four weeks of code, then one conversation with a user that undoes all of it.</p></div>
+    <div class="card"><span class="k">03 · The wrong amount of testing</span><p>Too little and users find the bugs. Too much and the release never happens. Your version is almost always too little, right up to the week before the demo, when it suddenly becomes too much.</p></div>
+    <div class="card"><span class="k">04 · Insecure maintenance</span><p>The update path is an attack path. Your version is smaller and more likely. A leaked key in the commit history, or a dependency you added once and never looked at again.</p></div>
+  </div>
+
+  <p style="margin-top:2rem">IBM's sharpest line on all of this is about perfectionism. “For most software development lifecycles, the perfect is the enemy of the good. A functional, if not perfect, release can get to market more quickly, and it can be improved through iterative rounds of postdeployment maintenance.”</p>
+  <p>That is not permission to ship rubbish. It is the observation that a working thing in front of users generates information, and a perfect thing on your laptop generates none. If you are waiting until your project is good enough to show, you have the order backwards. Showing it is how it gets good.</p>
+</section>
+
+<!-- ================= 16 DO ================= -->
+<section class="blk" id="do">
+  <span class="snum">16 · Do this now · 40 minutes</span>
+  <h2>Run one lap of all seven phases</h2>
+
+  <p>Not a small version of the cycle. All seven, tonight, at low quality. Low quality is the point. Once you have been round the loop you will know what each phase feels like, and the second lap is always easier than the first.</p>
+
   <ol class="ol">
-    <li>The lifecycle is <b>the list</b>. The models are arguments about the order and the loop.</li>
-    <li><b>Reversibility picks the model.</b> Cheap to undo means iterate. Impossible to undo means plan first.</li>
-    <li><b>Ship the lap, not the feature.</b> A lap that ships nothing was not a lap.</li>
-    <li>The agent removes typing, <b>not judgment</b>. Requirements is now the phase that matters most.</li>
+    <li><b>Planning.</b> Write the one sentence for <code>&lt;p class="summary"&gt;</code> in your <code>index.html</code>. Then write three non-goals in your notes.</li>
+    <li><b>Analysis.</b> Message one person outside your pod who has the problem. Ask what they do about it now. Put their words in the <b>Why we built it</b> section.</li>
+    <li><b>Design.</b> Sketch the demo on paper. List the files you expect in <code>src/</code> and put a name against each.</li>
+    <li><b>Coding.</b> Open <code>demo/index.html</code> and make one real thing work. A form, a button, one calculation. Small and finished beats large and half done, every time.</li>
+    <li><b>Testing.</b> Create a file in <code>test/</code> listing the steps a visitor takes and what should happen. Walk it. Write down what did not match.</li>
+    <li><b>Deployment.</b> Commit. Wait two minutes. Open <code>https://gcst-ai.github.io/gcst/projects/pod-NN/demo/</code> on your phone, not your laptop.</li>
+    <li><b>Maintenance.</b> Start the <b>Known problems</b> list with everything from step 5 you did not fix. Then decide which one the next lap starts with.</li>
   </ol>
 
-  <p style="margin-top:1.8rem"><strong>Friday, v0.1 live on the class site. That is the only thing I will ask you about next week.</strong></p>
+  <h3 style="margin-top:2.4rem">Before you close the laptop</h3>
+  <ul class="check" id="check">
+    <li><input type="checkbox" id="c1"><label for="c1">My project page says what the project does, in one sentence, in my own words</label></li>
+    <li><input type="checkbox" id="c2"><label for="c2">Three non-goals are written down where my whole pod can see them</label></li>
+    <li><input type="checkbox" id="c3"><label for="c3">I have quoted one real person who has the problem</label></li>
+    <li><input type="checkbox" id="c4"><label for="c4">Every file I expect in <code>src/</code> has a name against it</label></li>
+    <li><input type="checkbox" id="c5"><label for="c5">There is at least one file in <code>test/</code></label></li>
+    <li><input type="checkbox" id="c6"><label for="c6">The demo URL loads on my phone and shows something that is mine</label></li>
+    <li><input type="checkbox" id="c7"><label for="c7">The Known problems list exists and has at least one entry on it</label></li>
+    <li><input type="checkbox" id="c8"><label for="c8">No key, password or token is anywhere in the repository</label></li>
+  </ul>
+  <p style="margin-top:1rem; font-size:.9em; color:var(--ink3)">These tick boxes save in your browser. They are for you, nobody sees them.</p>
+
+  <div class="callout">
+    <span class="k">If you only do one</span>
+    <p style="margin:0">Do number two. Analysis has the highest return and the lowest cost, and it is the one every pod in this class will skip. One conversation this week is worth more than everything else on the list combined, and it is the easiest thing here to actually do.</p>
+  </div>
+</section>
+
+<!-- ================= 17 SOURCES ================= -->
+<section class="blk" id="sources">
+  <span class="snum">17 · Sources</span>
+  <h2>Where this came from</h2>
+
+  <p>Everything quoted or attributed on this page comes from these two. Read them yourself. They are short, and checking what a lecture tells you is a habit worth building now.</p>
+
+  <ol class="src">
+    <li>Jackson, G., Holdsworth, J. and Kosinski, M. <em>What is the software development life cycle (SDLC)?</em> IBM Think. <a href="https://www.ibm.com/think/topics/sdlc">ibm.com/think/topics/sdlc</a>. Source of the seven phases and their deliverables, the model list, DevOps and DevSecOps, the SDLC benefits, the four challenges, the 33% testing cost figure, the IEEE 35% AI adoption figure, and the SolarWinds example.</li>
+    <li><em>Phases of the software development lifecycle.</em> Microsoft Power Platform. <a href="https://www.microsoft.com/en-us/power-platform/topics/phases-of-the-software-development-lifecycle">microsoft.com/en-us/power-platform/topics/phases-of-the-software-development-lifecycle</a>. Source of the parallel seven-phase breakdown with activities and outputs, the benefits list, the best practices, and security across the phases.</li>
+  </ol>
+
+  <p style="margin-top:1.6rem">The diagrams in sections 01, 02 and 11 are third-party SDLC illustrations, used here precisely because they do not agree with each other. Everything drawn in the house style is mine.</p>
 
   <div class="callout">
     <span class="k">Stuck?</span>
-    <p style="margin:0">Read <a href="https://github.com/GCST-AI/gcst/blob/main/HELP.md">HELP.md</a> in the class repo first, then ask in the group. Say what you clicked, what you expected, and what happened instead. That is three sentences and it is the difference between a question someone can answer and one they cannot.</p>
+    <p style="margin:0">Read <a href="https://github.com/GCST-AI/gcst/blob/main/HELP.md">HELP.md</a> in the class repo first, then ask in the group. Say what you clicked, what you expected, and what happened instead. Asking early is a skill, not an admission.</p>
   </div>
 </section>
 
 <footer class="foot">
-  <p>Software Development · Lecture 01 · Danish Puri · GCST · 05 Aug 2026</p>
-  <p style="margin-top:.4rem">Presented in class as a slide deck. This is the same lecture written to be read alone.</p>
+  <p>The Software Development Life Cycle · Lecture 01 v2 · Danish Puri · GCST · 05 Aug 2026</p>
+  <p style="margin-top:.4rem"><a href="../">Version 1</a> covers the process models. This version covers the cycle they all run.</p>
 </footer>
 
 </main>
@@ -865,7 +990,7 @@ footer.foot{
   // checklist persistence
   var boxes = document.querySelectorAll('#check input[type=checkbox]');
   Array.prototype.forEach.call(boxes, function(b){
-    var key = 'lec1-' + b.id;
+    var key = 'lec1v2-' + b.id;
     try{ if(localStorage.getItem(key) === '1'){ b.checked = true; } }catch(e){}
     b.parentElement.classList.toggle('done', b.checked);
     b.addEventListener('change', function(){
