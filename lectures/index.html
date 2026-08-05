@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Lectures — GlobalAI — GCST B.Tech AI</title>
 <meta name="description" content="Lecture notes for the B.Tech in Artificial Intelligence at GCST, written to be read on your own.">
+<meta name="author" content="Danish Puri">
 <style>
 :root{
   --paper:#E7E8E4; --surface:#F1F2EE; --ink:#151917; --ink2:#565C59; --ink3:#7C837F;
@@ -44,15 +45,59 @@ p{max-width:64ch}
 .item h2{font-family:var(--mono);font-weight:650;font-size:1.25rem;color:var(--ink);margin:.5rem 0 .5rem;letter-spacing:-.01em}
 .item p{margin:0;font-size:.95rem}
 .item .meta{font-family:var(--mono);font-size:.72rem;color:var(--ink3);margin-top:.8rem;letter-spacing:.06em}
+.byline{
+  font-family:var(--mono);font-size:.78rem;line-height:1.5;letter-spacing:.04em;color:var(--ink3);
+  margin:1.5rem 0 0;padding:.75rem 0 0;border-top:1px solid var(--hair);
+  display:flex;flex-wrap:wrap;gap:.35rem 1.1rem;align-items:baseline;max-width:none;
+}
+.byline b{color:var(--ink);font-weight:650;letter-spacing:.02em}
+.byline a{color:var(--accent);text-decoration:none;border-bottom:1px solid transparent}
+.byline a:hover{border-bottom-color:var(--accent)}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+</style>
+
+<!-- Site credit. Styles live here, not in style.css, so that a project
+     rewriting its own stylesheet cannot drop the notice. -->
+<style>
+.dp-credit{
+  position:fixed;top:0;right:0;z-index:2147483000;pointer-events:none;
+  max-width:min(62vw,22rem);
+  padding:.45rem .7rem;
+  font:500 11px/1.35 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  letter-spacing:.055em;
+  color:#4a535f;
+  background:rgba(255,255,255,.86);
+  border-left:1px solid rgba(0,0,0,.13);
+  border-bottom:1px solid rgba(0,0,0,.13);
+  border-bottom-left-radius:9px;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+}
+.dp-credit b{font-weight:700;color:#11151b}
+@media (prefers-color-scheme:dark){
+  .dp-credit{color:#9fa9b6;background:rgba(13,16,21,.86);
+    border-left-color:rgba(255,255,255,.15);border-bottom-color:rgba(255,255,255,.15)}
+  .dp-credit b{color:#e9edf2}
+}
+@media print{.dp-credit{position:static;background:none;border:0;backdrop-filter:none}}
+</style>
+
+<style>
+.dp-copyright{margin:.7rem 0 0;font-size:.8rem;opacity:.85}
 </style>
 </head>
 <body>
+<div class="dp-credit">Created by <b>Danish Puri</b> · Copyright &copy; 2026</div>
+
 <main>
   <a class="back" href="../">← GlobalAI</a>
   <p class="eyebrow">GCST · B.Tech Artificial Intelligence · Year 1</p>
   <h1>Lectures</h1>
   <p style="margin-top:1.2rem">Each lecture is written out in full so you can work through it at home, at your own pace, with the discussion questions and the answers included.</p>
+
+  <p class="byline">
+    <span>Created and maintained by <b>Danish Puri</b></span>
+    <span>Questions about these lectures? <a href="mailto:hello@danishpuri.com.np">hello@danishpuri.com.np</a></span>
+  </p>
 
   <div class="list">
     <a class="item" href="lec1/">
@@ -62,6 +107,10 @@ p{max-width:64ch}
       <span class="meta">05 Aug 2026 · about 40 minutes · 4 questions to answer</span>
     </a>
   </div>
+
+  <footer style="margin-top:4rem;padding-top:1.5rem;border-top:1px solid var(--hair)">
+  <p class="dp-copyright">Created by <b>Danish Puri</b>. &copy; 2026 Danish Puri. All rights reserved.</p>
+  </footer>
 </main>
 </body>
 </html>

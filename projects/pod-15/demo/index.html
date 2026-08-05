@@ -28,8 +28,39 @@
   <title>Pod 15 Demo</title>
 
   <link rel="stylesheet" href="../style.css">
+
+<!-- Site credit. Styles live here, not in style.css, so that a project
+     rewriting its own stylesheet cannot drop the notice. -->
+<style>
+.dp-credit{
+  position:fixed;top:0;right:0;z-index:2147483000;pointer-events:none;
+  max-width:min(62vw,22rem);
+  padding:.45rem .7rem;
+  font:500 11px/1.35 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  letter-spacing:.055em;
+  color:#4a535f;
+  background:rgba(255,255,255,.86);
+  border-left:1px solid rgba(0,0,0,.13);
+  border-bottom:1px solid rgba(0,0,0,.13);
+  border-bottom-left-radius:9px;
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+}
+.dp-credit b{font-weight:700;color:#11151b}
+@media (prefers-color-scheme:dark){
+  .dp-credit{color:#9fa9b6;background:rgba(13,16,21,.86);
+    border-left-color:rgba(255,255,255,.15);border-bottom-color:rgba(255,255,255,.15)}
+  .dp-credit b{color:#e9edf2}
+}
+@media print{.dp-credit{position:static;background:none;border:0;backdrop-filter:none}}
+</style>
+
+<style>
+.dp-copyright{margin:.7rem 0 0;font-size:.8rem;opacity:.85}
+</style>
 </head>
 <body>
+<div class="dp-credit">Created by <b>Danish Puri</b> · Copyright &copy; 2026</div>
+
 
 <a class="back" href="../">Back to our project page</a>
 
@@ -54,6 +85,8 @@
 <footer>
   Part of <a href="../../../">GlobalAI</a>, the student AI lab at
   <a href="https://gcst.edu.np/">GCST</a>, Kathmandu.
+
+  <p class="dp-copyright">Created by <b>Danish Puri</b>. &copy; 2026 Danish Puri. Site design and code. Project content by Pod 15.</p>
 </footer>
 
 </body>

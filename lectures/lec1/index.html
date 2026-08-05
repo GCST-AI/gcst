@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Software Development Life Cycle — Lecture 01 v2 — study at home</title>
 <meta name="description" content="The seven phases of the software development life cycle, written so you can apply each one to your pod project this week.">
+<meta name="author" content="Danish Puri">
 
 <style>
 :root{
@@ -63,6 +64,7 @@ body::before{
 .topbar a.home:hover{color:var(--accent); border-color:var(--accent)}
 .topbar .mid{display:none}
 @media (min-width:720px){.topbar .mid{display:block}}
+.topbar .copy{white-space:nowrap}
 .topbar .tools{display:flex; gap:.4rem; align-items:center}
 .topbar button{
   font:inherit; letter-spacing:inherit; text-transform:inherit; cursor:pointer;
@@ -88,6 +90,14 @@ a{color:var(--accent)}
   color:var(--accent); margin:0 0 .8rem;
 }
 .lede{color:var(--ink); font-size:1.14em}
+.byline{
+  font-family:var(--mono); font-size:.78rem; line-height:1.5; letter-spacing:.04em;
+  color:var(--ink3); margin:1.5rem 0 0; padding:.75rem 0 0; border-top:1px solid var(--hair);
+  display:flex; flex-wrap:wrap; gap:.35rem 1.1rem; align-items:baseline; max-width:none;
+}
+.byline b{color:var(--ink); font-weight:650; letter-spacing:.02em}
+.byline a{color:var(--accent); text-decoration:none; border-bottom:1px solid transparent}
+.byline a:hover{border-bottom-color:var(--accent)}
 .mark{color:var(--accent); font-weight:600}
 code{font-family:var(--mono); font-size:.9em; color:var(--ink); background:var(--accent-soft); padding:.1em .35em}
 hr.rule{border:0; border-top:1px solid var(--hair); margin:0}
@@ -262,8 +272,14 @@ footer.foot{
   .shot img{opacity:1}
 }
 </style>
+
+
+<style>
+.dp-copyright{margin:.7rem 0 0;font-size:.8rem;opacity:.85}
+</style>
 </head>
 <body>
+
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
   <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
@@ -280,8 +296,9 @@ footer.foot{
 <div class="topbar">
   <div class="row">
     <a class="home" href="../../">← Lectures</a>
-    <span class="mid">Lecture 01 · v2 · the life cycle</span>
+    <span class="mid">Created and maintained by Danish Puri</span>
     <span class="tools">
+      <span class="copy">&copy; 2026 Danish Puri</span>
       <button type="button" id="btn-theme">theme</button>
     </span>
     <i id="prog"></i>
@@ -295,6 +312,11 @@ footer.foot{
   <p class="eyebrow">GCST · B.Tech Artificial Intelligence · Year 1</p>
   <h1>The Software Development Life Cycle</h1>
   <p class="lede" style="margin-top:1.2rem">Seven phases, seven deliverables, and every one of them already waiting in your pod folder.</p>
+
+  <p class="byline">
+    <span>Created and maintained by <b>Danish Puri</b></span>
+    <span>Questions about this lecture? <a href="mailto:hello@danishpuri.com.np">hello@danishpuri.com.np</a></span>
+  </p>
   <p style="margin-top:1rem">This is version two of Lecture 01. Version one asked <em>which process model should we use</em>. This one goes underneath that question, to the thing all the models are arguing about, which is the life cycle itself. Every phase here ends with something you can do to <strong>your</strong> project this week, in the folder you already have. Nothing here is theory you have to wait to use.</p>
   <p><a href="../">Read v1 first</a> if you have not. It covers waterfall, iterative and RAD, and this page assumes you have seen those names once.</p>
 
@@ -958,8 +980,11 @@ https://gcst-ai.github.io/gcst/projects/<b>pod-NN</b>/demo/     <i>the thing act
 </section>
 
 <footer class="foot">
-  <p>The Software Development Life Cycle · Lecture 01 v2 · Danish Puri · GCST · 05 Aug 2026</p>
+  <p>The Software Development Life Cycle · Lecture 01 · GCST · 05 Aug 2026</p>
+  <p style="margin-top:.4rem">Created and maintained by <b style="color:var(--ink)">Danish Puri</b>. Questions about this lecture go to <a href="mailto:hello@danishpuri.com.np">hello@danishpuri.com.np</a>.</p>
   <p style="margin-top:.4rem"><a href="../">Version 1</a> covers the process models. This version covers the cycle they all run.</p>
+
+  <p class="dp-copyright">Created by <b>Danish Puri</b>. &copy; 2026 Danish Puri, all rights reserved.</p>
 </footer>
 
 </main>
