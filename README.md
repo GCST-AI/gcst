@@ -8,6 +8,15 @@ Student built AI projects from the B.Tech in Artificial Intelligence programme a
 
 ---
 
+# Lectures
+
+Every lecture is written out in full so you can work through it again at home.
+
+- **[Lecture 01, Software Development](https://gcst-ai.github.io/gcst/lectures/lec1/)** — the life cycle,
+  waterfall, iterative, RAD, agentic AI, git and GitHub, and shipping v0.1 of your project.
+
+---
+
 # Students, start here
 
 You do not need to install anything. Everything happens in your browser.

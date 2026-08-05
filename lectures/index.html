@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lectures — GlobalAI — GCST B.Tech AI</title>
+<meta name="description" content="Lecture notes for the B.Tech in Artificial Intelligence at GCST, written to be read on your own.">
+<style>
+:root{
+  --paper:#E7E8E4; --surface:#F1F2EE; --ink:#151917; --ink2:#565C59; --ink3:#7C837F;
+  --hair:#C6C9C4; --accent:#B96C08;
+  --mono: ui-monospace,"SF Mono",SFMono-Regular,Menlo,Monaco,"Cascadia Mono","Roboto Mono",Consolas,monospace;
+  --sans: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme:dark){
+  :root{--paper:#101312;--surface:#171B1A;--ink:#E8EAE7;--ink2:#9AA19D;--ink3:#6E756F;--hair:#2A302E;--accent:#F0A93C}
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink2);font-family:var(--sans);line-height:1.6}
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.4;
+  background-image:
+    repeating-linear-gradient(to right,var(--hair) 0 1px,transparent 1px 48px),
+    repeating-linear-gradient(to bottom,var(--hair) 0 1px,transparent 1px 48px);
+  mask-image:radial-gradient(ellipse at 50% 0%,#000 10%,transparent 70%);
+}
+main{position:relative;z-index:1;max-width:56rem;margin:0 auto;padding:clamp(2rem,6vw,4rem) clamp(1rem,4vw,2rem) 5rem}
+a.back{
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink3);text-decoration:none
+}
+a.back:hover{color:var(--accent)}
+.eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin:2.4rem 0 .8rem}
+h1{font-family:var(--mono);font-weight:650;letter-spacing:-.02em;line-height:1.1;color:var(--ink);margin:0;font-size:clamp(1.9rem,1.4rem + 2.4vw,3rem)}
+p{max-width:64ch}
+.list{display:grid;gap:1rem;margin-top:2.6rem}
+.item{
+  display:block;text-decoration:none;border:1px solid var(--hair);background:var(--surface);
+  padding:1.4rem 1.5rem;color:var(--ink2)
+}
+.item:hover{border-color:var(--accent)}
+.item .n{font-family:var(--mono);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+.item h2{font-family:var(--mono);font-weight:650;font-size:1.25rem;color:var(--ink);margin:.5rem 0 .5rem;letter-spacing:-.01em}
+.item p{margin:0;font-size:.95rem}
+.item .meta{font-family:var(--mono);font-size:.72rem;color:var(--ink3);margin-top:.8rem;letter-spacing:.06em}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="../">← GlobalAI</a>
+  <p class="eyebrow">GCST · B.Tech Artificial Intelligence · Year 1</p>
+  <h1>Lectures</h1>
+  <p style="margin-top:1.2rem">Each lecture is written out in full so you can work through it at home, at your own pace, with the discussion questions and the answers included.</p>
+
+  <div class="list">
+    <a class="item" href="lec1/">
+      <span class="n">Lecture 01</span>
+      <h2>Software Development</h2>
+      <p>The program development life cycle, waterfall, iterative and RAD. Then agentic AI for coding, git and GitHub, and shipping v0.1 of your project.</p>
+      <span class="meta">05 Aug 2026 · about 40 minutes · 4 questions to answer</span>
+    </a>
+  </div>
+</main>
+</body>
+</html>

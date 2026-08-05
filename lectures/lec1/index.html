@@ -1,0 +1,880 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Software Development — Lecture 01 — study at home</title>
+<meta name="description" content="The full Lecture 01 on software process models, agentic AI and GitHub, written to be read on your own at home.">
+
+<style>
+:root{
+  --paper:#E7E8E4; --surface:#F1F2EE; --ink:#151917; --ink2:#565C59; --ink3:#7C837F;
+  --hair:#C6C9C4; --accent:#B96C08; --accent-soft:#B96C081f; --teal:#20716A;
+  --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono", "Roboto Mono", Consolas, monospace;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#101312; --surface:#171B1A; --ink:#E8EAE7; --ink2:#9AA19D; --ink3:#6E756F;
+    --hair:#2A302E; --accent:#F0A93C; --accent-soft:#F0A93C1c; --teal:#5FBDB0;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#101312; --surface:#171B1A; --ink:#E8EAE7; --ink2:#9AA19D; --ink3:#6E756F;
+  --hair:#2A302E; --accent:#F0A93C; --accent-soft:#F0A93C1c; --teal:#5FBDB0;
+}
+:root[data-theme="light"]{
+  --paper:#E7E8E4; --surface:#F1F2EE; --ink:#151917; --ink2:#565C59; --ink3:#7C837F;
+  --hair:#C6C9C4; --accent:#B96C08; --accent-soft:#B96C081f; --teal:#20716A;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth; scroll-padding-top:4.5rem}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  margin:0; background:var(--paper); color:var(--ink2);
+  font-family:var(--sans); font-size:clamp(1rem,.96rem + .2vw,1.09rem); line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+body::before{
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.4;
+  background-image:
+    repeating-linear-gradient(to right, var(--hair) 0 1px, transparent 1px 48px),
+    repeating-linear-gradient(to bottom, var(--hair) 0 1px, transparent 1px 48px);
+  mask-image:radial-gradient(ellipse at 50% 0%, #000 10%, transparent 70%);
+}
+
+/* ---------- shell ---------- */
+.topbar{
+  position:sticky; top:0; z-index:20; background:color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter:blur(8px); border-bottom:1px solid var(--hair);
+}
+.topbar .row{
+  max-width:64rem; margin:0 auto; padding:.65rem clamp(1rem,4vw,2rem);
+  display:flex; align-items:center; gap:1rem; justify-content:space-between;
+  font-family:var(--mono); font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--ink3);
+}
+.topbar a.home{color:var(--ink3); text-decoration:none; border-bottom:1px solid transparent}
+.topbar a.home:hover{color:var(--accent); border-color:var(--accent)}
+.topbar .tools{display:flex; gap:.4rem; align-items:center}
+.topbar button{
+  font:inherit; letter-spacing:inherit; text-transform:inherit; cursor:pointer;
+  color:var(--ink2); background:var(--surface); border:1px solid var(--hair); padding:.34rem .6rem;
+}
+.topbar button:hover{color:var(--accent); border-color:var(--accent)}
+#prog{position:absolute; left:0; bottom:-1px; height:2px; width:0; background:var(--accent)}
+
+main{position:relative; z-index:1; max-width:64rem; margin:0 auto; padding:0 clamp(1rem,4vw,2rem) 6rem}
+
+/* ---------- type ---------- */
+h1,h2,h3{font-family:var(--mono); font-weight:650; letter-spacing:-.02em; line-height:1.1; color:var(--ink); text-wrap:balance; margin:0}
+h1{font-size:clamp(2rem,1.4rem + 3vw,3.4rem)}
+h2{font-size:clamp(1.45rem,1.15rem + 1.5vw,2.1rem)}
+h3{font-size:clamp(1.08rem,1rem + .45vw,1.3rem); letter-spacing:-.01em}
+p{margin:0 0 1.05em; max-width:68ch}
+p:last-child{margin-bottom:0}
+strong,b{color:var(--ink); font-weight:600}
+a{color:var(--accent)}
+.eyebrow{
+  font-family:var(--mono); font-size:.72rem; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--accent); margin:0 0 .8rem;
+}
+.lede{color:var(--ink); font-size:1.14em}
+.mark{color:var(--accent); font-weight:600}
+code{font-family:var(--mono); font-size:.9em; color:var(--ink); background:var(--accent-soft); padding:.1em .35em}
+hr.rule{border:0; border-top:1px solid var(--hair); margin:0}
+
+/* ---------- sections ---------- */
+section.blk{padding:clamp(2.4rem,5vw,4rem) 0; border-top:1px solid var(--hair)}
+section.blk:first-of-type{border-top:0}
+.hero{padding:clamp(2.6rem,7vw,5rem) 0 clamp(2rem,4vw,3rem)}
+.snum{
+  font-family:var(--mono); font-size:.72rem; letter-spacing:.2em; color:var(--ink3);
+  display:block; margin-bottom:.5rem;
+}
+.blk > h2 + p, .blk > .snum + h2 + p{margin-top:1.1rem}
+
+/* ---------- figures ---------- */
+figure{margin:2rem 0; display:grid; gap:.7rem}
+.figwrap{overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch}
+figure svg{display:block; width:100%; min-width:520px; height:auto; color:var(--ink)}
+figcaption{font-family:var(--mono); font-size:.78rem; line-height:1.5; color:var(--ink3)}
+.d-lbl{font-family:var(--mono); font-size:14px; fill:currentColor}
+.d-sm{font-family:var(--mono); font-size:12px; fill:currentColor; opacity:.72}
+.d-xs{font-family:var(--mono); font-size:11px; fill:currentColor; opacity:.62}
+.d-hi{fill:var(--accent)}
+.s-box{fill:none; stroke:currentColor; stroke-width:1; opacity:.82}
+.s-line{stroke:currentColor; stroke-width:1; fill:none; opacity:.7}
+.s-faint{stroke:currentColor; stroke-width:1; fill:none; opacity:.2}
+.s-hi{stroke:var(--accent); stroke-width:1.6; fill:none}
+.s-hi-d{stroke:var(--accent); stroke-width:1.4; fill:none; stroke-dasharray:5 4}
+.f-hi{fill:var(--accent)}
+
+/* ---------- components ---------- */
+.cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(15rem,1fr)); gap:1rem; margin:1.6rem 0 0}
+.card{border:1px solid var(--hair); background:var(--surface); padding:1.1rem 1.2rem}
+.card .k{
+  font-family:var(--mono); font-size:.68rem; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--accent); display:block; margin-bottom:.5rem;
+}
+.card p{font-size:.94em; margin:0}
+
+.ol{display:grid; gap:.85rem; counter-reset:st; margin:1.4rem 0 0; padding:0; list-style:none}
+.ol li{position:relative; padding-left:2.6rem; max-width:66ch}
+.ol li::before{
+  counter-increment:st; content:counter(st,decimal-leading-zero);
+  position:absolute; left:0; top:.34em;
+  font-family:var(--mono); font-size:.72rem; color:var(--accent); letter-spacing:.08em;
+}
+
+pre.code{
+  margin:1.4rem 0 0; font-family:var(--mono); font-size:.88rem; line-height:1.8;
+  border:1px solid var(--hair); border-left:2px solid var(--accent);
+  background:var(--surface); padding:1rem 1.1rem; overflow-x:auto; color:var(--ink2);
+}
+pre.code b{color:var(--ink); font-weight:600}
+pre.code i{color:var(--ink3); font-style:normal}
+
+/* think prompt */
+.think{
+  border:1px solid var(--hair); border-left:2px solid var(--accent); background:var(--surface);
+  padding:1.3rem 1.4rem; margin:2rem 0 0;
+}
+.think .k{
+  font-family:var(--mono); font-size:.68rem; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--accent); display:block; margin-bottom:.7rem;
+}
+.think .qq{
+  font-family:var(--mono); font-size:clamp(1.02rem,.98rem + .35vw,1.25rem); line-height:1.35;
+  color:var(--ink); font-weight:600; margin:0 0 .9rem; max-width:46ch; letter-spacing:-.01em;
+}
+.think .how{font-size:.92em; color:var(--ink3); margin:0 0 1rem}
+details.reveal{border:1px solid var(--hair); background:var(--paper)}
+details.reveal summary{
+  cursor:pointer; list-style:none; padding:.7rem .9rem;
+  font-family:var(--mono); font-size:.68rem; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--accent); display:flex; gap:.6rem; align-items:center;
+}
+details.reveal summary::-webkit-details-marker{display:none}
+details.reveal summary::before{content:"+"; font-size:1.5em; line-height:.7}
+details.reveal[open] summary::before{content:"–"}
+details.reveal .rv{padding:0 .9rem .9rem; font-size:.94em}
+details.reveal .rv p{margin-bottom:.7em}
+
+/* checklist */
+.check{list-style:none; margin:1.4rem 0 0; padding:0; display:grid; gap:.55rem}
+.check li{display:grid; grid-template-columns:auto 1fr; gap:.8rem; align-items:start}
+.check input{margin:.42rem 0 0; accent-color:var(--accent); width:1rem; height:1rem; flex:none}
+.check label{cursor:pointer}
+.check li.done label{opacity:.5; text-decoration:line-through}
+
+.callout{
+  border:1px solid var(--accent); background:var(--accent-soft); padding:1.1rem 1.2rem; margin:1.8rem 0 0;
+}
+.callout .k{
+  font-family:var(--mono); font-size:.68rem; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--accent); display:block; margin-bottom:.5rem;
+}
+
+/* contents */
+.toc{border:1px solid var(--hair); background:var(--surface); padding:1.3rem 1.4rem; margin:2rem 0 0}
+.toc .k{font-family:var(--mono); font-size:.68rem; letter-spacing:.18em; text-transform:uppercase; color:var(--ink3); display:block; margin-bottom:.8rem}
+.toc ol{margin:0; padding:0; list-style:none; display:grid; gap:.4rem; counter-reset:t}
+.toc a{
+  text-decoration:none; color:var(--ink2); font-family:var(--mono); font-size:.86rem;
+  display:grid; grid-template-columns:2.2rem 1fr; gap:.4rem;
+}
+.toc a::before{counter-increment:t; content:counter(t,decimal-leading-zero); color:var(--accent); font-size:.72rem}
+.toc a:hover{color:var(--accent)}
+
+footer.foot{
+  border-top:1px solid var(--hair); margin-top:3rem; padding:2rem 0 0;
+  font-family:var(--mono); font-size:.74rem; letter-spacing:.06em; color:var(--ink3);
+}
+:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+
+@media (max-width:600px){
+  figure svg{min-width:440px}
+  .think{padding:1.1rem}
+}
+@media print{
+  .topbar, .think .how{display:none}
+  body::before{display:none}
+  details.reveal{border-color:#999}
+  details.reveal .rv{display:block !important}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,1 L9,5 L0,9 z" fill="currentColor"></path>
+  </marker>
+  <marker id="ar-hi" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,1 L9,5 L0,9 z" fill="var(--accent)"></path>
+  </marker>
+  <pattern id="hatch" width="7" height="7" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+    <line x1="0" y1="0" x2="0" y2="7" stroke="var(--accent)" stroke-width="2.4" opacity=".45"></line>
+  </pattern>
+</defs></svg>
+
+<div class="topbar">
+  <div class="row">
+    <a class="home" href="../../">← GlobalAI</a>
+    <span>Lecture 01 · study at home</span>
+    <span class="tools">
+      <button type="button" id="btn-theme">theme</button>
+    </span>
+    <i id="prog"></i>
+  </div>
+</div>
+
+<main>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <p class="eyebrow">GCST · B.Tech Artificial Intelligence · Year 1</p>
+  <h1>Software Development</h1>
+  <p class="lede" style="margin-top:1.2rem">How working software actually gets built, and which of these four processes your project needs this week.</p>
+  <p style="margin-top:1rem">This is the full Lecture 01, rewritten so you can work through it alone at home. Everything I said in the room is written down here, including the four discussion questions and the answers I was listening for. Read it with your own project in front of you, because half the questions ask you about it.</p>
+
+  <div class="toc">
+    <span class="k">What is in here · about 40 minutes</span>
+    <ol>
+      <li><a href="#framing">The one question every model is answering</a></li>
+      <li><a href="#pdlc">The Program Development Life Cycle</a></li>
+      <li><a href="#waterfall">Waterfall</a></li>
+      <li><a href="#iterative">Iterative</a></li>
+      <li><a href="#rad">Rapid Application Development</a></li>
+      <li><a href="#compare">What one change actually costs</a></li>
+      <li><a href="#agents">Agentic AI: autocomplete predicts, an agent loops</a></li>
+      <li><a href="#leverage">Where an agent helps, honestly</a></li>
+      <li><a href="#git">Git and GitHub: four places your code lives</a></li>
+      <li><a href="#do">Do this now: ship v0.1</a></li>
+      <li><a href="#homework">Homework</a></li>
+      <li><a href="#recap">Which model does your project need?</a></li>
+    </ol>
+  </div>
+
+  <div class="callout">
+    <span class="k">How to use this page</span>
+    <p style="margin:0">When you hit a <strong>Stop and think</strong> box, actually stop. Write your answer somewhere before you open the reveal. Reading my answer first feels like learning and is not. The whole point of those four questions is that you commit to a position and then find out.</p>
+  </div>
+</section>
+
+<!-- ================= 01 FRAMING ================= -->
+<section class="blk" id="framing">
+  <span class="snum">01 · Framing</span>
+  <h2>Every process model is answering the same three questions</h2>
+
+  <figure>
+    <div class="figwrap"><svg viewBox="0 0 860 226" role="img" aria-label="Three questions feeding into a single box labelled a process model, with question three marked as the deciding one">
+      <rect x="16" y="20" width="248" height="66" class="s-box"></rect>
+      <rect x="306" y="20" width="248" height="66" class="s-box"></rect>
+      <rect x="596" y="20" width="248" height="66" class="s-hi"></rect>
+      <g text-anchor="middle">
+        <text x="140" y="42" class="d-sm">01</text><text x="140" y="62" class="d-lbl">what are we building?</text>
+        <text x="430" y="42" class="d-sm">02</text><text x="430" y="62" class="d-lbl">in what order?</text>
+        <text x="720" y="42" class="d-sm d-hi" style="opacity:1">03</text>
+        <text x="720" y="62" class="d-lbl d-hi">what do we do when</text>
+        <text x="720" y="76" class="d-lbl d-hi">the answer to 01 changes?</text>
+      </g>
+      <line x1="140" y1="86" x2="368" y2="146" class="s-line" marker-end="url(#ar)"></line>
+      <line x1="430" y1="86" x2="430" y2="146" class="s-line" marker-end="url(#ar)"></line>
+      <line x1="720" y1="86" x2="492" y2="146" class="s-hi" marker-end="url(#ar-hi)"></line>
+      <rect x="300" y="148" width="260" height="52" class="s-box"></rect>
+      <text x="430" y="180" class="d-lbl" text-anchor="middle">a process model</text>
+    </svg></div>
+    <figcaption>A methodology is not a philosophy. It is a stored answer to question 03.</figcaption>
+  </figure>
+
+  <p>You already have a project. Right now it lives in your head, a WhatsApp group, and one laptop that holds the only copy. That is not a process. That is a single point of failure with a group chat attached.</p>
+  <p><span class="mark">Question three is the one that separates the models.</span> Everyone can plan. They differ only on what happens when the plan turns out to be wrong, which it will, around week three.</p>
+  <p>Hold on to that. Waterfall, iterative and RAD are not four philosophies competing for your loyalty. They are three different answers to one question, and the right answer depends on facts about your project that you can check today.</p>
+</section>
+
+<!-- ================= 02 PDLC ================= -->
+<section class="blk" id="pdlc">
+  <span class="snum">02 · Phase model</span>
+  <h2>The Program Development Life Cycle</h2>
+
+  <figure>
+    <div class="figwrap"><svg viewBox="0 0 980 306" role="img" aria-label="Six lifecycle phases in sequence above a rising curve showing the cost to fix a defect first found in each phase">
+      <g class="s-box">
+        <rect x="24" y="44" width="120" height="52"></rect><rect x="184" y="44" width="120" height="52"></rect>
+        <rect x="344" y="44" width="120" height="52"></rect><rect x="504" y="44" width="120" height="52"></rect>
+        <rect x="664" y="44" width="120" height="52"></rect><rect x="824" y="44" width="120" height="52"></rect>
+      </g>
+      <g text-anchor="middle">
+        <g class="d-sm d-hi" style="opacity:1"><text x="84" y="34">01</text><text x="244" y="34">02</text><text x="404" y="34">03</text><text x="564" y="34">04</text><text x="724" y="34">05</text><text x="884" y="34">06</text></g>
+        <g class="d-lbl"><text x="84" y="75">requirements</text><text x="244" y="75">design</text><text x="404" y="75">implementation</text><text x="564" y="75">testing</text><text x="724" y="75">deployment</text><text x="884" y="75">maintenance</text></g>
+        <g class="d-xs"><text x="164" y="62">spec</text><text x="324" y="62">plans</text><text x="484" y="62">code</text><text x="644" y="62">report</text><text x="804" y="62">ship</text></g>
+      </g>
+      <g class="s-line">
+        <line x1="146" y1="70" x2="182" y2="70" marker-end="url(#ar)"></line><line x1="306" y1="70" x2="342" y2="70" marker-end="url(#ar)"></line>
+        <line x1="466" y1="70" x2="502" y2="70" marker-end="url(#ar)"></line><line x1="626" y1="70" x2="662" y2="70" marker-end="url(#ar)"></line>
+        <line x1="786" y1="70" x2="822" y2="70" marker-end="url(#ar)"></line>
+      </g>
+      <g class="s-faint"><line x1="84" y1="100" x2="84" y2="254"></line><line x1="244" y1="100" x2="244" y2="246"></line><line x1="404" y1="100" x2="404" y2="232"></line><line x1="564" y1="100" x2="564" y2="206"></line><line x1="724" y1="100" x2="724" y2="174"></line><line x1="884" y1="100" x2="884" y2="136"></line></g>
+      <line x1="24" y1="272" x2="944" y2="272" class="s-line"></line>
+      <polyline points="84,258 244,250 404,236 564,210 724,178 884,140" class="s-hi"></polyline>
+      <g class="f-hi"><circle cx="84" cy="258" r="3.5"></circle><circle cx="244" cy="250" r="3.5"></circle><circle cx="404" cy="236" r="3.5"></circle><circle cx="564" cy="210" r="3.5"></circle><circle cx="724" cy="178" r="3.5"></circle><circle cx="884" cy="140" r="3.5"></circle></g>
+      <g class="d-sm d-hi" text-anchor="middle" style="opacity:1"><text x="84" y="248">1×</text><text x="244" y="240">2×</text><text x="404" y="226">5×</text><text x="564" y="200">15×</text><text x="724" y="168">40×</text><text x="884" y="130">100×</text></g>
+      <text x="24" y="292" class="d-xs">relative cost to fix a defect that is first discovered in that phase</text>
+    </svg></div>
+    <figcaption>The lifecycle is the list of things that must happen. The models argue about the order and the loop, never about the list.</figcaption>
+  </figure>
+
+  <p>Six phases: <strong>requirements, design, implementation, testing, deployment, maintenance</strong>. Nobody disputes this list. Every model on this page runs all six. They disagree about the order you run them in and how many times.</p>
+  <p>The curve underneath is the important part. Those multipliers are the whole reason process models exist. A misunderstanding caught in a conversation costs one unit. The same misunderstanding caught by a user after release costs about a hundred, because by then it is buried under design decisions, code, tests and other people's work that all assumed it was right.</p>
+  <p>You will not feel this in a two-week assignment. You will feel it hard in a four-month project, which is what you are in now.</p>
+
+  <div class="think">
+    <span class="k">Stop and think · 01</span>
+    <p class="qq">Your project has no written requirements. Neither did the first version of WhatsApp. So what is the requirements phase actually buying, and who is it buying it for?</p>
+    <p class="how">Two minutes. Write one sentence before you open this.</p>
+    <details class="reveal"><summary>What I was listening for</summary>
+      <div class="rv">
+        <p>Listen for the word <b>later</b>. A requirements document is insurance against a disagreement that has not happened yet.</p>
+        <p>If you are the only person who will ever touch the code and you ship on Friday, the premium is not worth paying. Change either of those two facts, add a second developer or add six months, and it becomes the cheapest thing you will buy all semester.</p>
+        <p>Now check your own situation. You are on a pod, so there is a second person. Your project runs past November, so there is time. Both facts are already true for you.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ================= 03 WATERFALL ================= -->
+<section class="blk" id="waterfall">
+  <span class="snum">03 · Model 01</span>
+  <h2>Waterfall</h2>
+
+  <p>Every phase is completed and signed off before the next one starts. The output of one phase is the only input to the next. Water does not flow uphill, which is the whole point of the name.</p>
+
+  <figure>
+    <div class="figwrap"><svg viewBox="0 0 780 440" role="img" aria-label="Six waterfall phases cascading downward, with a marked backflow arrow showing that a change found late invalidates every phase above it">
+      <g class="s-box">
+        <rect x="30" y="24" width="190" height="44"></rect><rect x="130" y="90" width="190" height="44"></rect>
+        <rect x="230" y="156" width="190" height="44"></rect><rect x="330" y="222" width="190" height="44"></rect>
+        <rect x="430" y="288" width="190" height="44"></rect><rect x="530" y="354" width="190" height="44"></rect>
+      </g>
+      <g class="d-lbl" text-anchor="middle">
+        <text x="125" y="52">requirements</text><text x="225" y="118">design</text><text x="325" y="184">implementation</text>
+        <text x="425" y="250">testing</text><text x="525" y="316">deployment</text><text x="625" y="382">maintenance</text>
+      </g>
+      <g class="s-line">
+        <line x1="180" y1="68" x2="180" y2="88" marker-end="url(#ar)"></line><line x1="280" y1="134" x2="280" y2="154" marker-end="url(#ar)"></line>
+        <line x1="380" y1="200" x2="380" y2="220" marker-end="url(#ar)"></line><line x1="480" y1="266" x2="480" y2="286" marker-end="url(#ar)"></line>
+        <line x1="580" y1="332" x2="580" y2="352" marker-end="url(#ar)"></line>
+      </g>
+      <g class="d-xs"><text x="192" y="82">sign-off</text><text x="292" y="148">sign-off</text><text x="392" y="214">sign-off</text><text x="492" y="280">sign-off</text><text x="592" y="346">sign-off</text></g>
+      <path d="M430,310 L16,310 L16,46 L28,46" class="s-hi-d" marker-end="url(#ar-hi)"></path>
+      <g class="d-sm d-hi" style="opacity:1"><text x="30" y="248">a change discovered here</text><text x="30" y="262">invalidates every phase above it</text><text x="30" y="276">and costs a full re-plan</text></g>
+    </svg></div>
+    <figcaption>The cascade is cheap. The marked arrow is what waterfall actually charges you for.</figcaption>
+  </figure>
+
+  <div class="cards">
+    <div class="card"><span class="k">Where it still wins</span><p>Launch vehicle software. Pacemaker firmware. Payment settlement. Anywhere the cost of being wrong in production is measured in lives or in crores, and the requirements genuinely do not move.</p></div>
+    <div class="card"><span class="k">Where it fails you</span><p>Your project. You do not yet know what you are building, so a signed-off spec is just a guess with a signature on it.</p></div>
+    <div class="card"><span class="k">The misreading</span><p>Waterfall is not slow at building. It is slow at changing its mind. Those are different weaknesses and only one of them is yours.</p></div>
+  </div>
+
+  <div class="think">
+    <span class="k">Stop and think · 02</span>
+    <p class="qq">A rocket launches once. A website deploys forty times a day. Waterfall is called obsolete and still ships rockets. What property of the problem decides the process?</p>
+    <p class="how">Two minutes. One sentence. Name the property.</p>
+    <details class="reveal"><summary>What I was listening for</summary>
+      <div class="rv">
+        <p>The word you are looking for is <b>reversibility</b>.</p>
+        <p>If a bad decision can be undone cheaply, iterate and find out by doing. If it cannot be undone at all, spend the time up front, because up front is the only time you have.</p>
+        <p>Ask it of every decision in your project this week. <em>Can I take this back on Monday?</em> Most of yours you can, which tells you which model to use.</p>
+      </div>
+    </details>
+  </div>
+
+  <figure>
+    <div class="figwrap"><svg viewBox="0 0 420 96" style="min-width:360px" role="img" aria-label="A scale from cheap to undo, favouring iteration, to impossible to undo, favouring planning">
+      <line x1="20" y1="48" x2="400" y2="48" class="s-line"></line>
+      <g class="s-line"><line x1="20" y1="42" x2="20" y2="54"></line><line x1="400" y1="42" x2="400" y2="54"></line></g>
+      <circle cx="128" cy="48" r="5" class="f-hi"></circle>
+      <text x="20" y="32" class="d-sm">cheap to undo</text>
+      <text x="400" y="32" class="d-sm" text-anchor="end">impossible to undo</text>
+      <text x="20" y="72" class="d-xs">iterate</text>
+      <text x="400" y="72" class="d-xs" text-anchor="end">plan first</text>
+      <text x="128" y="90" class="d-xs d-hi" text-anchor="middle" style="opacity:1">your project sits here</text>
+    </svg></div>
+  </figure>
+</section>
+
+<!-- ================= 04 ITERATIVE ================= -->
+<section class="blk" id="iterative">
+  <span class="snum">04 · Model 02</span>
+  <h2>Iterative</h2>
+
+  <p>Run the whole lifecycle in a short lap. Ship something real. Look at what happened. Run it again. The scope of a lap is small, but the list of phases inside it is the full six.</p>
+
+  <figure>
+    <div class="figwrap"><svg viewBox="0 0 920 300" role="img" aria-label="Three short laps of the full lifecycle, each one shipping a real release, with user feedback flowing from each release into the next lap">
+      <g class="s-line"><circle cx="130" cy="106" r="58"></circle><circle cx="460" cy="106" r="58"></circle><circle cx="790" cy="106" r="58"></circle></g>
+      <g class="f-hi"><polygon points="130,48 138,60 122,60"></polygon><polygon points="460,48 468,60 452,60"></polygon><polygon points="790,48 798,60 782,60"></polygon></g>
+      <g class="s-line" stroke-width="2">
+        <line x1="130" y1="48" x2="130" y2="40"></line><line x1="188" y1="106" x2="196" y2="106"></line><line x1="130" y1="164" x2="130" y2="172"></line><line x1="72" y1="106" x2="64" y2="106"></line>
+        <line x1="460" y1="48" x2="460" y2="40"></line><line x1="518" y1="106" x2="526" y2="106"></line><line x1="460" y1="164" x2="460" y2="172"></line><line x1="402" y1="106" x2="394" y2="106"></line>
+        <line x1="790" y1="48" x2="790" y2="40"></line><line x1="848" y1="106" x2="856" y2="106"></line><line x1="790" y1="164" x2="790" y2="172"></line><line x1="732" y1="106" x2="724" y2="106"></line>
+      </g>
+      <g class="d-lbl" text-anchor="middle"><text x="130" y="103">lap 1</text><text x="460" y="103">lap 2</text><text x="790" y="103">lap 3</text></g>
+      <g class="d-xs" text-anchor="middle"><text x="130" y="120">2 weeks</text><text x="460" y="120">2 weeks</text><text x="790" y="120">2 weeks</text></g>
+      <g class="s-hi"><line x1="216" y1="106" x2="376" y2="106" marker-end="url(#ar-hi)"></line><line x1="546" y1="106" x2="706" y2="106" marker-end="url(#ar-hi)"></line></g>
+      <g class="d-xs d-hi" text-anchor="middle" style="opacity:1"><text x="296" y="98">what users did with v0.1</text><text x="626" y="98">what users did with v0.2</text></g>
+      <g class="s-faint"><line x1="130" y1="176" x2="130" y2="238"></line><line x1="460" y1="176" x2="460" y2="238"></line><line x1="790" y1="176" x2="790" y2="238"></line></g>
+      <line x1="24" y1="240" x2="896" y2="240" class="s-line"></line>
+      <text x="24" y="232" class="d-xs">shipped to real users</text>
+      <g class="f-hi"><rect x="108" y="248" width="44" height="7"></rect><rect x="418" y="248" width="84" height="7"></rect><rect x="725" y="248" width="130" height="7"></rect></g>
+      <g class="d-sm" text-anchor="middle"><text x="130" y="274">v0.1</text><text x="460" y="274">v0.2</text><text x="790" y="274">v0.3</text></g>
+      <text x="24" y="292" class="d-xs">each lap runs the whole lifecycle. requirements, design, build, test. the scope is small, the list is not.</text>
+    </svg></div>
+    <figcaption>The unit of work is the lap, not the feature. Every lap ends with something a real person can open.</figcaption>
+  </figure>
+
+  <div class="cards">
+    <div class="card"><span class="k">The rule</span><p>If a lap ends with nothing shipped, it was not a lap. It was two weeks.</p></div>
+    <div class="card"><span class="k">Your lap 1</span><p>A page that loads and says what your project is. That is a real release. Ship it Friday.</p></div>
+    <div class="card"><span class="k">The trade</span><p>You pay for it in rework, because you build on things you later change. You buy information with that money.</p></div>
+  </div>
+
+  <div class="think">
+    <span class="k">Stop and think · 03</span>
+    <p class="qq">Iteration means shipping something incomplete on purpose. Your instinct is to hide it until it is good. Which instinct protects the project, and which one protects you?</p>
+    <p class="how">Two minutes. Be honest, nobody is grading this one.</p>
+    <details class="reveal"><summary>What I was listening for</summary>
+      <div class="rv">
+        <p>Hiding it protects <b>you</b>. That is not a character flaw, it is the normal reaction to being judged, and every professional developer has it.</p>
+        <p>But nothing you learn in private is feedback. A rough version in front of one real user on Friday tells you more than a perfect version in your head in November, and it tells you while you can still act on it.</p>
+      </div>
+    </details>
+  </div>
+
+  <figure>
+    <div class="figwrap"><svg viewBox="0 0 460 108" style="min-width:380px" role="img" aria-label="Information learned stays flat while a project is hidden and rises once it is shown to users">
+      <line x1="24" y1="86" x2="440" y2="86" class="s-line"></line>
+      <line x1="24" y1="86" x2="24" y2="18" class="s-line"></line>
+      <text x="18" y="14" class="d-xs" text-anchor="start">what you learn</text>
+      <polyline points="24,82 200,80 210,58 260,44 340,32 430,26" class="s-hi"></polyline>
+      <line x1="205" y1="18" x2="205" y2="90" class="s-hi-d"></line>
+      <text x="200" y="102" class="d-xs" text-anchor="end">hidden</text>
+      <text x="212" y="102" class="d-xs d-hi" style="opacity:1">shown to one real user</text>
+    </svg></div>
+  </figure>
+</section>
+
+<!-- ================= 05 RAD ================= -->
+<section class="blk" id="rad">
+  <span class="snum">05 · Model 03</span>
+  <h2>Rapid Application Development</h2>
+
+  <p>Fix the date, not the scope. Build rough prototypes of several modules in parallel, put each one in front of a real user, and let their reaction decide what the next prototype contains.</p>
+
+  <figure>
+    <div class="figwrap"><svg viewBox="0 0 920 344" role="img" aria-label="Loose requirements feeding a fixed timebox containing three parallel build and show cycles driven by user feedback, converging into integration and delivery">
+      <rect x="20" y="138" width="120" height="56" class="s-box"></rect>
+      <text x="80" y="162" class="d-lbl" text-anchor="middle">loose</text>
+      <text x="80" y="178" class="d-lbl" text-anchor="middle">requirements</text>
+      <line x1="142" y1="166" x2="168" y2="166" class="s-line" marker-end="url(#ar)"></line>
+      <rect x="170" y="26" width="540" height="280" class="s-hi-d"></rect>
+      <text x="170" y="18" class="d-sm d-hi" style="opacity:1">timebox · the date is fixed · the scope is not</text>
+      <g class="d-xs"><text x="180" y="62">module A</text><text x="180" y="140">module B</text><text x="180" y="218">module C</text></g>
+      <g class="s-box">
+        <rect x="264" y="59" width="76" height="30"></rect><rect x="396" y="59" width="112" height="30"></rect>
+        <rect x="264" y="137" width="76" height="30"></rect><rect x="396" y="137" width="112" height="30"></rect>
+        <rect x="264" y="215" width="76" height="30"></rect><rect x="396" y="215" width="112" height="30"></rect>
+      </g>
+      <g class="d-xs" text-anchor="middle" style="opacity:.85">
+        <text x="302" y="78">build</text><text x="452" y="78">show to users</text>
+        <text x="302" y="156">build</text><text x="452" y="156">show to users</text>
+        <text x="302" y="234">build</text><text x="452" y="234">show to users</text>
+      </g>
+      <g class="s-line">
+        <line x1="342" y1="74" x2="392" y2="74" marker-end="url(#ar)"></line>
+        <line x1="342" y1="152" x2="392" y2="152" marker-end="url(#ar)"></line>
+        <line x1="342" y1="230" x2="392" y2="230" marker-end="url(#ar)"></line>
+      </g>
+      <g class="s-hi">
+        <path d="M452,89 C452,114 302,114 302,91" marker-end="url(#ar-hi)"></path>
+        <path d="M452,167 C452,192 302,192 302,169" marker-end="url(#ar-hi)"></path>
+        <path d="M452,245 C452,270 302,270 302,247" marker-end="url(#ar-hi)"></path>
+      </g>
+      <text x="377" y="126" class="d-xs d-hi" text-anchor="middle" style="opacity:1">five of these in six weeks</text>
+      <g class="s-line">
+        <line x1="510" y1="74" x2="594" y2="146" marker-end="url(#ar)"></line>
+        <line x1="510" y1="152" x2="594" y2="156" marker-end="url(#ar)"></line>
+        <line x1="510" y1="230" x2="594" y2="166" marker-end="url(#ar)"></line>
+      </g>
+      <rect x="596" y="126" width="96" height="60" class="s-box"></rect>
+      <text x="644" y="161" class="d-lbl" text-anchor="middle">integrate</text>
+      <line x1="712" y1="156" x2="756" y2="156" class="s-line" marker-end="url(#ar)"></line>
+      <rect x="758" y="132" width="132" height="48" class="s-box"></rect>
+      <text x="824" y="161" class="d-lbl" text-anchor="middle">deliver</text>
+    </svg></div>
+    <figcaption>The marked loops are the engine. Remove the user from the room and RAD collapses into guessing at speed.</figcaption>
+  </figure>
+
+  <div class="cards">
+    <div class="card"><span class="k">The trade</span><p>You spend code quality to buy information speed, and you do it deliberately. Prototypes are meant to be thrown away.</p></div>
+    <div class="card"><span class="k">Needs</span><p>A real user who will look at it weekly, small teams that can work in parallel, and modules that can be built separately.</p></div>
+    <div class="card"><span class="k">Breaks when</span><p>No user is available, or the system needs to be correct more than it needs to be liked. Nobody RADs a banking ledger.</p></div>
+  </div>
+
+  <div class="think">
+    <span class="k">Stop and think · 04</span>
+    <p class="qq">RAD trades code quality for speed and calls that a strategy. Name one thing in your project you should deliberately build badly this week. Now defend it.</p>
+    <p class="how">Three minutes. I want a specific file or feature, not a category.</p>
+    <details class="reveal"><summary>What I was listening for</summary>
+      <div class="rv">
+        <p>The right answers are the parts you were going to throw away anyway. <b>Hardcode the data. Fake the login. Skip the database and use a JavaScript array.</b></p>
+        <p>Build badly everything that only exists to prove the idea works, and build carefully the one thing your project is actually about.</p>
+        <p>If you cannot name which one that is, that is the real finding of this exercise, and it is worth more than the answer would have been.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ================= 06 COMPARISON ================= -->
+<section class="blk" id="compare">
+  <span class="snum">06 · Side by side</span>
+  <h2>Same team, same project, one requirement changes in week three</h2>
+
+  <figure>
+    <div class="figwrap"><svg viewBox="0 0 940 322" role="img" aria-label="A timeline comparison showing that a requirement change in week three costs waterfall three weeks of rework, iterative half a lap, and RAD two days">
+      <g class="s-line"><line x1="150" y1="48" x2="870" y2="48"></line></g>
+      <g class="s-line"><line x1="150" y1="44" x2="150" y2="52"></line><line x1="270" y1="44" x2="270" y2="52"></line><line x1="390" y1="44" x2="390" y2="52"></line><line x1="510" y1="44" x2="510" y2="52"></line><line x1="630" y1="44" x2="630" y2="52"></line><line x1="750" y1="44" x2="750" y2="52"></line><line x1="870" y1="44" x2="870" y2="52"></line></g>
+      <g class="d-xs" text-anchor="middle"><text x="150" y="38">w0</text><text x="270" y="38">w2</text><text x="390" y="38">w4</text><text x="510" y="38">w6</text><text x="630" y="38">w8</text><text x="750" y="38">w10</text><text x="870" y="38">w12</text></g>
+      <line x1="330" y1="56" x2="330" y2="300" class="s-hi-d"></line>
+      <text x="330" y="20" class="d-sm d-hi" text-anchor="middle" style="opacity:1">requirement changes here</text>
+
+      <text x="24" y="94" class="d-lbl">waterfall</text><text x="24" y="110" class="d-xs d-hi" style="opacity:1">costs three weeks</text>
+      <rect x="150" y="80" width="540" height="20" class="s-box"></rect>
+      <text x="420" y="94" class="d-xs" text-anchor="middle">one delivery, planned for w9</text>
+      <rect x="690" y="80" width="180" height="20" fill="url(#hatch)" stroke="var(--accent)" stroke-width="1"></rect>
+      <text x="780" y="118" class="d-xs d-hi" text-anchor="middle" style="opacity:1">rework. delivery slips to w12</text>
+
+      <text x="24" y="178" class="d-lbl">iterative</text><text x="24" y="194" class="d-xs d-hi" style="opacity:1">costs half a lap</text>
+      <line x1="150" y1="172" x2="870" y2="172" class="s-line"></line>
+      <g class="s-box" fill="currentColor"><rect x="264" y="166" width="12" height="12"></rect><rect x="504" y="166" width="12" height="12"></rect><rect x="624" y="166" width="12" height="12"></rect><rect x="744" y="166" width="12" height="12"></rect><rect x="864" y="166" width="12" height="12"></rect></g>
+      <rect x="384" y="166" width="12" height="12" class="f-hi"></rect>
+      <text x="404" y="158" class="d-xs d-hi" style="opacity:1">absorbed by the w4 release</text>
+      <text x="150" y="202" class="d-xs">a release every two weeks, all the way through</text>
+
+      <text x="24" y="262" class="d-lbl">RAD</text><text x="24" y="278" class="d-xs d-hi" style="opacity:1">costs two days</text>
+      <line x1="150" y1="256" x2="630" y2="256" class="s-line"></line>
+      <g class="s-line" stroke-width="1.6"><line x1="210" y1="250" x2="210" y2="262"></line><line x1="270" y1="250" x2="270" y2="262"></line><line x1="450" y1="250" x2="450" y2="262"></line><line x1="510" y1="250" x2="510" y2="262"></line><line x1="570" y1="250" x2="570" y2="262"></line></g>
+      <line x1="360" y1="248" x2="360" y2="264" class="s-hi" stroke-width="2.4"></line>
+      <text x="372" y="242" class="d-xs d-hi" style="opacity:1">next prototype already has it</text>
+      <circle cx="630" cy="256" r="6" class="f-hi"></circle>
+      <text x="644" y="260" class="d-xs">delivered w8</text>
+      <text x="150" y="286" class="d-xs">a prototype in front of users most weeks</text>
+    </svg></div>
+    <figcaption>This is the only comparison that matters. Not which model is modern, but what a change costs you once you have chosen.</figcaption>
+  </figure>
+
+  <p>Notice that waterfall is not slower at building. It is slower at <span class="mark">changing its mind</span>. If your requirements really were frozen, the top lane would deliver first and cost least. They are not frozen, which is why the top lane loses.</p>
+</section>
+
+<!-- ================= 07 AGENTS ================= -->
+<section class="blk" id="agents">
+  <span class="snum">07 · Part two · Definition</span>
+  <h2>Autocomplete predicts. An agent runs a loop.</h2>
+
+  <p>Everything above was invented before any of you were born and none of it has been repealed. What changed is how fast one person can move through a lap.</p>
+
+  <figure>
+    <div class="figwrap"><svg viewBox="0 0 940 300" role="img" aria-label="Autocomplete is a one-way chain from typing to accepting, while an agent reads the repository, plans, edits, runs the code and feeds the output back into the next plan">
+      <text x="24" y="26" class="d-sm" letter-spacing="2">AUTOCOMPLETE</text>
+      <g class="s-box"><rect x="24" y="86" width="110" height="44"></rect><rect x="170" y="86" width="110" height="44"></rect><rect x="316" y="86" width="110" height="44"></rect></g>
+      <g class="d-xs" text-anchor="middle" style="opacity:.9"><text x="79" y="112">you type</text><text x="225" y="112">it predicts</text><text x="371" y="112">you accept</text></g>
+      <g class="s-line"><line x1="136" y1="108" x2="168" y2="108" marker-end="url(#ar)"></line><line x1="282" y1="108" x2="314" y2="108" marker-end="url(#ar)"></line></g>
+      <text x="24" y="176" class="d-sm">one direction. it never runs</text>
+      <text x="24" y="192" class="d-sm">the code it just wrote.</text>
+
+      <line x1="470" y1="16" x2="470" y2="284" class="s-faint"></line>
+
+      <text x="514" y="26" class="d-sm" letter-spacing="2">AGENT LOOP</text>
+      <g class="s-box"><rect x="514" y="84" width="100" height="42"></rect><rect x="650" y="84" width="100" height="42"></rect><rect x="786" y="84" width="100" height="42"></rect><rect x="650" y="176" width="100" height="42"></rect><rect x="786" y="176" width="100" height="42"></rect></g>
+      <g class="d-xs" text-anchor="middle" style="opacity:.9">
+        <text x="564" y="109">read the repo</text><text x="700" y="109">plan</text><text x="836" y="109">edit files</text>
+        <text x="700" y="201">read output</text><text x="836" y="201">run it</text>
+      </g>
+      <g class="s-line">
+        <line x1="616" y1="105" x2="648" y2="105" marker-end="url(#ar)"></line>
+        <line x1="752" y1="105" x2="784" y2="105" marker-end="url(#ar)"></line>
+        <path d="M836,128 L836,174" marker-end="url(#ar)"></path>
+        <line x1="784" y1="197" x2="752" y2="197" marker-end="url(#ar)"></line>
+      </g>
+      <path d="M648,197 L628,197 L628,105 L648,105" class="s-hi" marker-end="url(#ar-hi)"></path>
+      <text x="514" y="146" class="d-xs d-hi" style="opacity:1">tests fail,</text>
+      <text x="514" y="160" class="d-xs d-hi" style="opacity:1">so the plan changes</text>
+      <line x1="700" y1="220" x2="700" y2="248" class="s-line" marker-end="url(#ar)"></line>
+      <text x="710" y="240" class="d-xs">tests pass</text>
+      <rect x="640" y="250" width="120" height="34" class="s-box"></rect>
+      <text x="700" y="272" class="d-xs" text-anchor="middle" style="opacity:.9">done</text>
+    </svg></div>
+    <figcaption>The marked edge is the entire difference. An agent sees the result of its own work and gets another turn.</figcaption>
+  </figure>
+
+  <p>This matters for your project because the loop is the same loop you saw in the iterative model, only running in minutes instead of weeks. The skill you are actually developing is not prompting. It is <span class="mark">writing a stopping condition</span> clear enough that a loop can tell when it is done, which is the same skill as writing a requirement.</p>
+  <p>Test yourself on that at home. Take the next thing you want to build and write down, in one sentence, how anyone would know it is finished. If you cannot, the agent cannot either, and you will get back something that looks right and is not.</p>
+</section>
+
+<!-- ================= 08 LEVERAGE ================= -->
+<section class="blk" id="leverage">
+  <span class="snum">08 · Honest accounting</span>
+  <h2>It removes typing, not judgment</h2>
+
+  <figure>
+    <div class="figwrap"><svg viewBox="0 0 900 336" role="img" aria-label="Leverage bars per lifecycle phase showing agents help least in requirements and most in implementation and testing">
+      <text x="16" y="20" class="d-sm" letter-spacing="1.6">HOW MUCH AN AGENT ACTUALLY HELPS</text>
+      <g class="d-lbl"><text x="16" y="66">requirements</text><text x="16" y="114">design</text><text x="16" y="162">implementation</text><text x="16" y="210">testing</text><text x="16" y="258">deployment</text><text x="16" y="306">maintenance</text></g>
+      <g class="s-faint" fill="currentColor" stroke="none">
+        <rect x="180" y="54" width="48" height="12"></rect><rect x="232" y="54" width="48" height="12"></rect><rect x="284" y="54" width="48" height="12"></rect><rect x="336" y="54" width="48" height="12"></rect><rect x="388" y="54" width="48" height="12"></rect>
+        <rect x="180" y="102" width="48" height="12"></rect><rect x="232" y="102" width="48" height="12"></rect><rect x="284" y="102" width="48" height="12"></rect><rect x="336" y="102" width="48" height="12"></rect><rect x="388" y="102" width="48" height="12"></rect>
+        <rect x="180" y="150" width="48" height="12"></rect><rect x="232" y="150" width="48" height="12"></rect><rect x="284" y="150" width="48" height="12"></rect><rect x="336" y="150" width="48" height="12"></rect><rect x="388" y="150" width="48" height="12"></rect>
+        <rect x="180" y="198" width="48" height="12"></rect><rect x="232" y="198" width="48" height="12"></rect><rect x="284" y="198" width="48" height="12"></rect><rect x="336" y="198" width="48" height="12"></rect><rect x="388" y="198" width="48" height="12"></rect>
+        <rect x="180" y="246" width="48" height="12"></rect><rect x="232" y="246" width="48" height="12"></rect><rect x="284" y="246" width="48" height="12"></rect><rect x="336" y="246" width="48" height="12"></rect><rect x="388" y="246" width="48" height="12"></rect>
+        <rect x="180" y="294" width="48" height="12"></rect><rect x="232" y="294" width="48" height="12"></rect><rect x="284" y="294" width="48" height="12"></rect><rect x="336" y="294" width="48" height="12"></rect><rect x="388" y="294" width="48" height="12"></rect>
+      </g>
+      <g class="f-hi">
+        <rect x="180" y="54" width="48" height="12"></rect>
+        <rect x="180" y="102" width="48" height="12"></rect><rect x="232" y="102" width="48" height="12"></rect><rect x="284" y="102" width="48" height="12"></rect>
+        <rect x="180" y="150" width="48" height="12"></rect><rect x="232" y="150" width="48" height="12"></rect><rect x="284" y="150" width="48" height="12"></rect><rect x="336" y="150" width="48" height="12"></rect><rect x="388" y="150" width="48" height="12"></rect>
+        <rect x="180" y="198" width="48" height="12"></rect><rect x="232" y="198" width="48" height="12"></rect><rect x="284" y="198" width="48" height="12"></rect><rect x="336" y="198" width="48" height="12"></rect><rect x="388" y="198" width="48" height="12"></rect>
+        <rect x="180" y="246" width="48" height="12"></rect><rect x="232" y="246" width="48" height="12"></rect><rect x="284" y="246" width="48" height="12"></rect><rect x="336" y="246" width="48" height="12"></rect>
+        <rect x="180" y="294" width="48" height="12"></rect><rect x="232" y="294" width="48" height="12"></rect><rect x="284" y="294" width="48" height="12"></rect><rect x="336" y="294" width="48" height="12"></rect>
+      </g>
+      <g class="d-sm"><text x="452" y="64">it will build the wrong thing, fast</text><text x="452" y="112">a good sounding board, it has seen more designs than you</text><text x="452" y="160">this is the easy part now</text><text x="452" y="208">the part you skip. stop skipping it.</text><text x="452" y="256">scripts, config, deploy files</text><text x="452" y="304">reads unfamiliar code better than you do</text></g>
+    </svg></div>
+    <figcaption>Five cells is full leverage. Requirements gets one, and that one cell is the whole argument.</figcaption>
+  </figure>
+
+  <p>Map the tool onto the lifecycle and the picture is lopsided. Agents are strongest exactly where you were already competent and weakest where you were already struggling.</p>
+  <p><strong>The requirements phase just became the phase that matters most.</strong> That is the opposite of what most of you expected. When implementation is cheap, the cost of building the wrong thing goes up, not down, because you will build it faster and further before anyone notices.</p>
+  <p>The 100× multiplier from section 02 does not care that an agent wrote the code.</p>
+</section>
+
+<!-- ================= 09 GIT ================= -->
+<section class="blk" id="git">
+  <span class="snum">09 · The tool</span>
+  <h2>Four places your code lives</h2>
+
+  <figure>
+    <div class="figwrap"><svg viewBox="0 0 940 234" role="img" aria-label="Code moves from the working directory to the staging area to the local repository and across the network boundary to GitHub, using add, commit, push, pull and clone">
+      <g class="s-box"><rect x="24" y="70" width="170" height="54"></rect><rect x="234" y="70" width="170" height="54"></rect><rect x="444" y="70" width="170" height="54"></rect><rect x="700" y="70" width="170" height="54"></rect></g>
+      <g class="d-lbl" text-anchor="middle"><text x="109" y="94">working dir</text><text x="319" y="94">staging area</text><text x="529" y="94">local repo</text><text x="785" y="94">GitHub</text></g>
+      <g class="d-xs" text-anchor="middle"><text x="109" y="112">the files you edit</text><text x="319" y="112">the next commit</text><text x="529" y="112">your full history</text><text x="785" y="112">the shared copy</text></g>
+      <line x1="658" y1="20" x2="658" y2="200" class="s-hi-d"></line>
+      <text x="648" y="34" class="d-sm d-hi" text-anchor="end" style="opacity:1">your laptop</text>
+      <text x="668" y="34" class="d-sm d-hi" style="opacity:1">the internet</text>
+      <g class="s-line">
+        <line x1="196" y1="97" x2="232" y2="97" marker-end="url(#ar)"></line>
+        <line x1="406" y1="97" x2="442" y2="97" marker-end="url(#ar)"></line>
+        <line x1="616" y1="97" x2="698" y2="97" marker-end="url(#ar)"></line>
+        <path d="M700,140 L444,140" marker-end="url(#ar)"></path>
+        <path d="M785,126 L785,192 L109,192 L109,126" marker-end="url(#ar)"></path>
+      </g>
+      <g class="d-sm" text-anchor="middle" style="opacity:.95"><text x="214" y="90">git add</text><text x="424" y="90">git commit</text><text x="657" y="88">git push</text><text x="572" y="134">git pull</text><text x="447" y="206">git clone</text></g>
+    </svg></div>
+    <figcaption>Git is the tool that tracks every version. GitHub is the place that holds the shared copy. The dashed line is why push exists.</figcaption>
+  </figure>
+
+  <p>A commit is a labelled snapshot of the whole project that you can return to. That is the actual promise here. It means you can break things confidently, which is the only way anyone learns to build anything.</p>
+
+  <pre class="code"><b>git clone</b> <i>&lt;url&gt;</i>   <i># copy the shared repo onto your laptop</i>
+<b>git add</b> index.html   <i># choose what goes in the next snapshot</i>
+<b>git commit</b> -m <i>"add project section"</i>   <i># take the snapshot</i>
+<b>git push</b>   <i># send your snapshots to GitHub</i>
+<b>git pull</b>   <i># get everyone else's</i></pre>
+
+  <div class="callout">
+    <span class="k">You do not need any of this to do the homework</span>
+    <p style="margin:0">Learn the five commands, they are the professional path and you will need them. But the class site can be edited entirely in your browser, with no install, and that is what the next section walks you through. Do the browser version tonight. Learn the commands this month.</p>
+  </div>
+</section>
+
+<!-- ================= 10 DO IT ================= -->
+<section class="blk" id="do">
+  <span class="snum">10 · Do this now · 30 minutes</span>
+  <h2>Ship v0.1 into the class site</h2>
+
+  <p>Your project has a permanent address. It is <code>https://gcst-ai.github.io/gcst/projects/pod-X/</code>, where X is your pod number. That address never changes, and tonight you are going to make it say something true.</p>
+
+  <figure>
+    <div class="figwrap"><svg viewBox="0 0 900 200" role="img" aria-label="Editing in the browser on github dot com, committing, waiting two minutes for the build, and the page appearing live at your pod address">
+      <g class="s-box"><rect x="20" y="66" width="180" height="56"></rect><rect x="260" y="66" width="180" height="56"></rect><rect x="500" y="66" width="150" height="56"></rect><rect x="710" y="66" width="170" height="56"></rect></g>
+      <g class="d-lbl" text-anchor="middle"><text x="110" y="90">edit in browser</text><text x="350" y="90">commit changes</text><text x="575" y="90">wait 2 min</text><text x="795" y="90">it is live</text></g>
+      <g class="d-xs" text-anchor="middle">
+        <text x="110" y="110">pencil icon, github.com</text><text x="350" y="110">the green button</text>
+        <text x="575" y="110">the site rebuilds</text><text x="795" y="110">your pod address</text>
+      </g>
+      <g class="s-line">
+        <line x1="202" y1="94" x2="258" y2="94" marker-end="url(#ar)"></line>
+        <line x1="442" y1="94" x2="498" y2="94" marker-end="url(#ar)"></line>
+        <line x1="652" y1="94" x2="708" y2="94" marker-end="url(#ar)"></line>
+      </g>
+      <path d="M795,124 L795,164 L110,164 L110,126" class="s-hi" marker-end="url(#ar-hi)"></path>
+      <text x="452" y="182" class="d-sm d-hi" text-anchor="middle" style="opacity:1">look at it, then go round again. that is a lap.</text>
+      <text x="20" y="40" class="d-sm">the whole loop, no install, about four minutes</text>
+    </svg></div>
+    <figcaption>Every commit here is a real deployment. That is why v0.1 can exist tonight.</figcaption>
+  </figure>
+
+  <h3 style="margin-top:2.4rem">The steps</h3>
+  <ol class="ol">
+    <li>Open <a href="https://github.com/GCST-AI/gcst">github.com/GCST-AI/gcst</a> and sign in. Read the existing <code>index.html</code> before you change anything.</li>
+    <li>Go into <code>projects/</code> and open your pod folder, for example <code>pod-07</code>.</li>
+    <li>Click <code>index.html</code>, then the <strong>pencil icon</strong> at the top right.</li>
+    <li>Change the words between the tags. <code>&lt;h1&gt;Pod 7&lt;/h1&gt;</code> becomes <code>&lt;h1&gt;Crop Disease Scanner&lt;/h1&gt;</code>. Change the words, keep the tags.</li>
+    <li>Click the green <strong>Commit changes</strong> button, then <strong>Commit changes</strong> again.</li>
+    <li>Wait two minutes, open your pod address, and refresh. That is a deployment.</li>
+    <li>Now do the same to the front page: find your pod's card in the top-level <code>index.html</code> and put your real project name and one sentence in it.</li>
+  </ol>
+
+  <div class="callout">
+    <span class="k">What v0.1 means</span>
+    <p style="margin:0">Not finished. <strong>Loading.</strong> A page that opens, says what your project is called, and says in one sentence what it does. If you are tempted to wait until it looks good, reread section 04 and the honest answer you wrote there.</p>
+  </div>
+
+  <h3 style="margin-top:2.4rem">Before you close the laptop</h3>
+  <ul class="check" id="check">
+    <li><input type="checkbox" id="c1"><label for="c1">My pod page loads at its address and shows my real project name</label></li>
+    <li><input type="checkbox" id="c2"><label for="c2">There is one sentence on it saying what the project does</label></li>
+    <li><input type="checkbox" id="c3"><label for="c3">My card on the front page says the same thing</label></li>
+    <li><input type="checkbox" id="c4"><label for="c4">I sent the link to one person who is not on my pod</label></li>
+    <li><input type="checkbox" id="c5"><label for="c5">I wrote down the one part of my project I will build carefully, and the parts I will build badly</label></li>
+  </ul>
+  <p style="margin-top:1rem; font-size:.9em; color:var(--ink3)">These tick boxes save in your browser. They are for you, nobody sees them.</p>
+</section>
+
+<!-- ================= 11 HOMEWORK ================= -->
+<section class="blk" id="homework">
+  <span class="snum">11 · Homework</span>
+  <h2>Two things before we meet again</h2>
+
+  <figure>
+    <div class="figwrap"><svg viewBox="0 0 900 154" role="img" aria-label="Timeline from today Wednesday to Friday when version 0.1 is due and Sunday when the Google course module is due">
+      <line x1="40" y1="82" x2="860" y2="82" class="s-line"></line>
+      <g class="s-line"><line x1="40" y1="76" x2="40" y2="88"></line><line x1="177" y1="76" x2="177" y2="88"></line><line x1="314" y1="76" x2="314" y2="88"></line><line x1="451" y1="76" x2="451" y2="88"></line><line x1="588" y1="76" x2="588" y2="88"></line><line x1="725" y1="76" x2="725" y2="88"></line><line x1="860" y1="76" x2="860" y2="88"></line></g>
+      <g class="d-xs" text-anchor="middle"><text x="40" y="104">wed</text><text x="177" y="104">thu</text><text x="314" y="104">fri</text><text x="451" y="104">sat</text><text x="588" y="104">sun</text><text x="725" y="104">mon</text><text x="860" y="104">tue</text></g>
+      <text x="40" y="62" class="d-sm">today</text>
+      <circle cx="314" cy="82" r="7" class="f-hi"></circle>
+      <circle cx="588" cy="82" r="7" class="f-hi"></circle>
+      <text x="314" y="60" class="d-sm d-hi" text-anchor="middle" style="opacity:1">v0.1 live on the class site</text>
+      <text x="588" y="60" class="d-sm d-hi" text-anchor="middle" style="opacity:1">module 1 of the Google path</text>
+      <text x="40" y="140" class="d-xs">v0.1, not v1.0. one lap. something that loads.</text>
+    </svg></div>
+  </figure>
+
+  <div class="cards">
+    <div class="card"><span class="k">01 · Friday</span><p><b>Ship v0.1.</b> Your pod page live, naming your project and saying what it does. Not finished. Loading.</p></div>
+    <div class="card"><span class="k">02 · Sunday</span><p><b>Start the Google path.</b> <a href="https://www.skills.google/paths/236/course_templates/885">skills.google/paths/236</a>. Finish module 1 and bring one thing that surprised you.</p></div>
+    <div class="card"><span class="k">03 · Ongoing</span><p><b>Commit every day you write code.</b> Even a broken commit. The habit is worth more than any single commit in it.</p></div>
+  </div>
+</section>
+
+<!-- ================= 12 RECAP ================= -->
+<section class="blk" id="recap">
+  <span class="snum">12 · Close</span>
+  <h2>Which one does your project actually need?</h2>
+
+  <figure>
+    <div class="figwrap"><svg viewBox="0 0 940 306" role="img" aria-label="A decision chart. If a wrong choice cannot be undone cheaply, plan up front. If it can, and a real user sees it weekly, use RAD, otherwise use iterative">
+      <rect x="20" y="122" width="112" height="46" class="s-box"></rect>
+      <text x="76" y="150" class="d-lbl" text-anchor="middle">your project</text>
+      <line x1="134" y1="145" x2="174" y2="145" class="s-line" marker-end="url(#ar)"></line>
+      <polygon points="290,87 402,145 290,203 178,145" class="s-box"></polygon>
+      <text x="290" y="140" class="d-xs" text-anchor="middle" style="opacity:.9">can a wrong choice</text>
+      <text x="290" y="156" class="d-xs" text-anchor="middle" style="opacity:.9">be undone cheaply?</text>
+      <line x1="290" y1="203" x2="290" y2="246" class="s-line" marker-end="url(#ar)"></line>
+      <text x="298" y="228" class="d-xs">no</text>
+      <rect x="200" y="248" width="180" height="46" class="s-box"></rect>
+      <text x="290" y="268" class="d-lbl" text-anchor="middle">waterfall</text>
+      <text x="290" y="284" class="d-xs" text-anchor="middle" style="opacity:.8">plan more up front</text>
+      <line x1="402" y1="145" x2="448" y2="145" class="s-line" marker-end="url(#ar)"></line>
+      <text x="410" y="136" class="d-xs">yes</text>
+      <polygon points="564,87 676,145 564,203 452,145" class="s-box"></polygon>
+      <text x="564" y="140" class="d-xs" text-anchor="middle" style="opacity:.9">a real user, in front</text>
+      <text x="564" y="156" class="d-xs" text-anchor="middle" style="opacity:.9">of it every week?</text>
+      <path d="M564,87 L564,58 L694,58" class="s-line" marker-end="url(#ar)"></path>
+      <text x="572" y="76" class="d-xs">yes</text>
+      <rect x="700" y="36" width="200" height="46" class="s-box"></rect>
+      <text x="800" y="56" class="d-lbl" text-anchor="middle">RAD</text>
+      <text x="800" y="72" class="d-xs" text-anchor="middle" style="opacity:.8">prototype and show</text>
+      <path d="M564,203 L564,240 L694,240" class="s-hi" marker-end="url(#ar-hi)"></path>
+      <text x="572" y="228" class="d-xs d-hi" style="opacity:1">no</text>
+      <rect x="700" y="218" width="200" height="46" class="s-hi"></rect>
+      <text x="800" y="238" class="d-lbl d-hi" text-anchor="middle">iterative</text>
+      <text x="800" y="254" class="d-xs d-hi" text-anchor="middle" style="opacity:1">ship every lap</text>
+    </svg></div>
+    <figcaption>For almost every project in this room, the answer is the marked one.</figcaption>
+  </figure>
+
+  <ol class="ol">
+    <li>The lifecycle is <b>the list</b>. The models are arguments about the order and the loop.</li>
+    <li><b>Reversibility picks the model.</b> Cheap to undo means iterate. Impossible to undo means plan first.</li>
+    <li><b>Ship the lap, not the feature.</b> A lap that ships nothing was not a lap.</li>
+    <li>The agent removes typing, <b>not judgment</b>. Requirements is now the phase that matters most.</li>
+  </ol>
+
+  <p style="margin-top:1.8rem"><strong>Friday, v0.1 live on the class site. That is the only thing I will ask you about next week.</strong></p>
+
+  <div class="callout">
+    <span class="k">Stuck?</span>
+    <p style="margin:0">Read <a href="https://github.com/GCST-AI/gcst/blob/main/HELP.md">HELP.md</a> in the class repo first, then ask in the group. Say what you clicked, what you expected, and what happened instead. That is three sentences and it is the difference between a question someone can answer and one they cannot.</p>
+  </div>
+</section>
+
+<footer class="foot">
+  <p>Software Development · Lecture 01 · Danish Puri · GCST · 05 Aug 2026</p>
+  <p style="margin-top:.4rem">Presented in class as a slide deck. This is the same lecture written to be read alone.</p>
+</footer>
+
+</main>
+
+<script>
+(function(){
+  // theme
+  var root = document.documentElement;
+  try{ var s = localStorage.getItem('lec1-theme'); if(s) root.setAttribute('data-theme', s); }catch(e){}
+  document.getElementById('btn-theme').addEventListener('click', function(){
+    var cur = root.getAttribute('data-theme');
+    if(!cur) cur = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    var next = cur === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try{ localStorage.setItem('lec1-theme', next); }catch(e){}
+  });
+
+  // reading progress
+  var prog = document.getElementById('prog');
+  function onScroll(){
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    prog.style.width = (h > 0 ? (window.scrollY / h) * 100 : 0) + '%';
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll);
+  onScroll();
+
+  // checklist persistence
+  var boxes = document.querySelectorAll('#check input[type=checkbox]');
+  Array.prototype.forEach.call(boxes, function(b){
+    var key = 'lec1-' + b.id;
+    try{ if(localStorage.getItem(key) === '1'){ b.checked = true; } }catch(e){}
+    b.parentElement.classList.toggle('done', b.checked);
+    b.addEventListener('change', function(){
+      b.parentElement.classList.toggle('done', b.checked);
+      try{ localStorage.setItem(key, b.checked ? '1' : '0'); }catch(e){}
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
